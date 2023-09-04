@@ -1,0 +1,33 @@
+.header {
+  padding: 14px 70px;
+  display: flex;
+  background-color: inherit;
+  align-items: center; 
+}
+
+.header_type_not-auth {
+  background-color: #465DFF;
+}
+
+.header__logo {
+  width: 38px;
+  height: 38px;
+  margin-right: 44px;
+}
+
+.header__logo:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
+
+
+@media screen and (max-width: 420px) {
+  .header {
+    padding: 18px 14px;
+  }
+}
