@@ -79,6 +79,7 @@ textarea:focus {
   cursor: pointer;
   font-weight: 500;
   color: #EE3465;
+  text-decoration: none;
 }
 
 .profile__logout:hover {
@@ -87,7 +88,7 @@ textarea:focus {
 
 @media screen and (max-width: 768px) {
   .profile {
-    margin: 230px auto 0;
+    margin: 246px auto 0;
     padding-bottom: 30px;
   }
 

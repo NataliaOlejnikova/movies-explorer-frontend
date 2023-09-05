@@ -46,16 +46,16 @@
 }
 
 .login__input {
-  background-color: transparent;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  color: #000000;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 8px;
+  background: #F9F9F9;
   border: none;
-  border-bottom: 1px solid #F9F9F9;
-  padding: 0;
-  margin-bottom: 4px;
-  outline: none;
+  color: #000000;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+  padding: 15px;
 }
 
 .login__input:focus,
@@ -65,7 +65,7 @@ textarea:focus {
 }
 
 .login__error {
-  height: 12px;
+  height: 20px;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
@@ -118,7 +118,13 @@ textarea:focus {
 
 @media screen and (max-width: 768px) {
   .login {
-    margin-top: 232px;
+    margin-top: 230px;
+  }
+  .login__error{
+    margin-bottom: 0;
+  }
+  .login__button {
+    margin-top: 159px;
   }
 }
 
@@ -126,7 +132,7 @@ textarea:focus {
   .login {
     min-width: 260px;
     width: calc(100% - 60px);
-    margin-top: 56px;
+    margin-top: 54px;
     padding-bottom: 30px;
   }
 
@@ -143,7 +149,7 @@ textarea:focus {
   }
 
   .login__button {
-    margin-top: 280px;
+    margin-top: 247px;
     margin-bottom: 14px;
     font-size: 12px;
   }

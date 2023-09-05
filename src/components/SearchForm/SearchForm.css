@@ -1,12 +1,16 @@
 .search-form__film-container {
-    padding-bottom: 15px;
-    border-bottom: 1px solid #E8E8E8;
-    margin: 70px 70px 30px;
-    font-size: 28px;
+    max-width: 100%;
+  padding: 70px 70px 30px 75px;
+  border: none;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 .search-form__form-field {
-    display: flex;
-    justify-content: space-between;
+    max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E8E8E8;
 }
 
 .search-form__loupe {
@@ -21,8 +25,15 @@
 }
 
 .search-form__input {
-    border: none;
+    font-family: inherit;
+    color: #a0a0a0;
     text-align: center;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    padding: 0;
 }
 
 .search-form__arrow {
@@ -35,15 +46,17 @@
     border: none;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 805px) {
     .search-form__film-container {
-        margin: 80px 30px 30px;
-        padding-bottom:0px;
+        padding: 80px 30px 30px;
     }
 
     .search-form__loupe {
         min-width: 46px;
         min-height: 46px;
+    }
+    .search-form__input {
+    max-width: calc(100% - 70px);
     }
 }
 

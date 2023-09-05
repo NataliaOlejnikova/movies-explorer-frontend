@@ -49,7 +49,7 @@ const Navigation = ({ loggedIn }) => {
 
             <li>
               <Link to="/profile" className="navigation__movies-link navigation__button-account">
-                Аккаунт <img className={"navtab__link__account-logo"} alt={'Аккаунт'} src={account} />
+                Аккаунт <img className={"navtab__account-logo"} alt={'Аккаунт'} src={account} />
               </Link>
             </li>
           </ul>

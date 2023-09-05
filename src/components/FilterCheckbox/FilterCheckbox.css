@@ -1,47 +1,80 @@
-.filter-checkbox {
+.checkbox {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 49px;
+  gap: 12px;
+  padding-bottom: 48px;
 }
 
-.filter-checkbox__input {
-  opacity: 0;
-  z-index: -1;
-}
-
-.filter-checkbox__custom-checkbox {
-  background-image: url(../../images/smalltumb.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 36px;
-  min-height: 20px;
+.checkbox__container {
   display: inline-block;
-  margin: 0;
-  padding: 0;
+  position: relative;
+  width: 36px;
+  height: 20px;
 }
 
-.filter-checkbox__text {
-  font-weight: 400;
+.checkbox__element {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.checkbox__visible {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 34px;
+  background: #343434;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.checkbox__visible::before {
+  content: "";
+  position: absolute;
+  cursor: pointer;
+  bottom: 5px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #a0a0a0;
+  transition: .5s;
+}
+
+.checkbox__text {
   font-size: 14px;
-  line-height: 18px;
-  margin: 0 0 0 12px;
+  line-height: 1.29;
+  margin: 0;
+  font-family: Inter;
 }
 
-@media screen and (max-width: 960px) {
-  .filter-checkbox {
-      padding-bottom: 62px;
+.checkbox__element:checked + .checkbox__visible {
+  background: #2be080;
+}
+
+.checkbox__element:checked + .checkbox__visible::before {
+  background: #fff;
+  transform: translateX(16px);
+}
+
+@media screen and (max-width: 805px) {
+  .checkbox {
+    padding-bottom: 61px;
   }
 }
 
-@media screen and (max-width: 580px) {
-  .filter-checkbox {
-      padding-bottom: 51px;
+@media screen and (max-width: 450px) {
+  .checkbox {
+    padding-bottom: 50px;
   }
 
-  .filter-checkbox__text {
-      font-size: 11px;
-      margin-left: 13px;
+  .checkbox__text {
+    font-size: 11px;
+    line-height: 1.64;
   }
 }

@@ -38,6 +38,7 @@
   overflow: hidden;
   text-align: start;
   margin: 0;
+  text-overflow: ellipsis;
 }
 
 .card__duration {

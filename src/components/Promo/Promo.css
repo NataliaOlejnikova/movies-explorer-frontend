@@ -60,7 +60,7 @@
     font-size: 30px;
     line-height: 38px;
     margin: 44px 10px 24px 10px;
-    letter-spacing:-1vw;
+    letter-spacing:-0.5vw;
   }
 }
 
@@ -136,15 +136,15 @@
   max-height: 304px;
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 768px) {
   .promo__picture {
-    margin-top: 140px;
+    margin-top: 156px;
   }
 }
 
 @media screen and (max-width: 450px) {
   .promo__picture {
-    margin-top: 70px;
+    margin-top: 65px;
     max-width: 210px;
   }
 }
