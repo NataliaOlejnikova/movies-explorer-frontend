@@ -1,8 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./BurgerMenu.css";
-import account from './../../images/icon__COLOR_icon-main.svg';
-import "../Navigation/Navigation";
+import { AccountButton } from '../AccountButton/AccountButton';
 
 const BurgerMenu = ({ onClose }) => {
   return (
@@ -17,27 +16,36 @@ const BurgerMenu = ({ onClose }) => {
           <nav>
             <ul className="burger__menu">
               <li>
-                <a className="burger-link" href="/" >
-                  Главная
-                </a>
+              <NavLink
+                exact="true"
+                to="/"
+                className={({isActive}) => isActive ? 'burger-link_active' : 'burger-link'}
+                >
+                Главная
+              </NavLink>
               </li>
               <li>
-                <a ClassName="burger-link" href="/movies" >
-                  Фильмы
-                </a>
+              <NavLink
+                to="/movies"
+                className={({isActive}) => isActive ? 'burger-link_active' : 'burger-link'}
+                >
+                Фильмы
+              </NavLink>
               </li>
               <li>
-                <a className="burger-link" href="/saved-movies">
-                  Сохранённые фильмы
-                </a>
+              <NavLink
+                to="/saved-movies"
+                className={({isActive}) => isActive ? 'burger-link_active' : 'burger-link'}
+              >
+                Сохранённые фильмы
+              </NavLink>
               </li>
             </ul>
+            
           </nav>
-          <Link to="/profile">
-            <button className="burger__button_account" type='button'>Аккаунт</button>
-            <img className={"navtab__account-logo"} alt={'Аккаунт'} src={account} />
-          </Link>
+          <AccountButton />
         </div>
+       
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+/* global location */
+/* eslint no-restricted-globals: ["off", "location"] */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigator from '../Navigation/Navigation';

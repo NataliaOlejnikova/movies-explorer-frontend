@@ -3,7 +3,7 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className='footer'>
+    <footer class='footer'>
       <span className='footer__text'>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </span>

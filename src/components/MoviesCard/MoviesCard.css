@@ -26,6 +26,9 @@
   display: flex;
   flex-direction: column;
   gap: 9px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card__name {
@@ -33,12 +36,11 @@
   font-size: 15px;
   line-height: 16px;
   color: #000000;
-  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   text-align: start;
   margin: 0;
-  text-overflow: ellipsis;
+  
 }
 
 .card__duration {
@@ -152,6 +154,6 @@
   }
 
   .card__link {
-    max-height: 168px;
+    max-width: 100%;
   }
 }

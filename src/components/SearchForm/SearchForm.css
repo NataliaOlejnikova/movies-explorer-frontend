@@ -1,76 +1,166 @@
-.search-form__film-container {
-    max-width: 100%;
-  padding: 70px 70px 30px 75px;
-  border: none;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-.search-form__form-field {
-    max-width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #E8E8E8;
+.search-form {
+    padding: 70px 70px 48px 70px;
 }
 
-.search-form__loupe {
-    background-image: url(../../images/icon.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    min-width: 34px;
-    min-height: 34px;
-    margin-left: 6px;
-    background-color: inherit;
-    border: none;
+.search-form__form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.search-form__bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 0 9px 6px;
+    cursor: text;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.search-form__icon {
+    width: 34px;
+    height: 34px;
+    background-image: url('../../images/icon__loupe.svg');
 }
 
 .search-form__input {
-    font-family: inherit;
-    color: #a0a0a0;
-    text-align: center;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    max-width: calc(100% - 80px);
+    outline: none;
     border: none;
     padding: 0;
+    /* Inter Medium */
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    text-align: center;
 }
 
-.search-form__arrow {
-    background-image: url(../../images/find.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    min-width: 34px;
-    min-height: 34px;
-    background-color: inherit;
+.search-form__input:focus {
+    outline: 1px solid #2BE080;
+}
+
+.search-form__button {
+    width: 34px;
+    height: 34px;
+    background-image: url('../../images/find.svg');
     border: none;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 805px) {
-    .search-form__film-container {
-        padding: 80px 30px 30px;
+.search-form__button:hover {
+    transition: opacity 0.2s;
+    opacity: 0.8;
+}
+
+.search-form__checkbox {
+    height: 20px;
+    margin-top: 29px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-form__switch {
+    position: relative;
+    line-height: 0;
+    font-size: 0;
+    transition: opacity 0.3s ease;
+}
+
+.search-form__checkbox-toggle {
+    width: 36px;
+    height: 20px;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #EBEBEB;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(.42, 0, .58, 1);
+    cursor: pointer;
+    outline: none;
+}
+
+.search-form__checkbox-toggle:hover {
+    transition: opacity 0.2s;
+    opacity: 0.8;
+}
+
+.search-form__checkbox-slider {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    cursor: pointer;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    transform: translate(0);
+    transition: all 0.3s cubic-bezier(.42, 0, .58, 1);
+}
+
+.search-form__checkbox-toggle:checked {
+    background-color: #2BE080;
+}
+
+.search-form__checkbox-toggle:checked+.search-form__checkbox-slider {
+    background-color: white;
+    transform: translate(calc(100% + 6px));
+}
+
+.search-form__shorts {
+    margin: 0;
+    /* Inter Regular */
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+@media screen and (max-width: 769px) {
+    .search-form {
+        padding: 96px 30px 65px 30px;
     }
 
-    .search-form__loupe {
-        min-width: 46px;
-        min-height: 46px;
-    }
-    .search-form__input {
-    max-width: calc(100% - 70px);
+    .search-form__bar {
+        padding-bottom: 15px;
     }
 }
 
-@media screen and (max-width: 580px) {
-    .search-form__loupe {
+@media screen and (max-width: 480px) {
+    .search-form {
+        padding: 90px 14px 40px 14px;
+    }
+
+    .search-form__icon {
         display: none;
     }
 
-    .search-form__input {
-        text-align: left;
+    .search-form__bar {
+        align-items: flex-start;
+        padding-bottom: 9px;
+        padding-left: 0;
     }
 
-    .search-form__film-container {
-        margin: 92px 14px 43px;
+    .search-form__input {
+        width: calc(100% - 44px);
         font-size: 18px;
+        line-height: 22px;
+        text-align: start;
     }
+
+    .search-form__checkbox {
+        margin-top: 42px;
+    }
+
+    .search-form__shorts {
+        font-size: 11px;
+        line-height: 18px;
+    }
+
 }

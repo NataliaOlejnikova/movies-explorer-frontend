@@ -1,24 +1,33 @@
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
-function SearchForm() {
-  return (
-    <>
-      <section className="search-form">
-        <form className="search-form__film-container">
-        <label className="search-form__form-field">
-          <button className="search-form__loupe"></button>
-          <input
-            required
-            type="name"
-            placeholder="Фильм"
-            className="search-form__input"
-          ></input>
-          <button className="search-form__arrow"></button>
-        </label>
-        </form>
-        <FilterCheckbox />
-      </section>
-    </>
-  );
+
+export const SearchForm = () => {
+    return (
+        <section className="search-form">
+            <form className="search-form__form">
+                <div className="search-form__bar">
+                    <div className="search-form__icon"></div>
+                    <input
+                        name="text"
+                        className="search-form__input"
+                        type="text"
+                        placeholder="Фильм"
+                        required
+                    ></input>
+                    <button type="submit" className="search-form__button" aria-label="Искать"></button>
+                </div>
+                <div className="search-form__checkbox">
+                    <label className="search-form__switch">
+                        <input
+                            id="toggle-checkbox"
+                            className="search-form__checkbox-toggle"
+                            type="checkbox"
+                        />
+                        <span className="search-form__checkbox-slider" />
+                    </label>
+                    <p className="search-form__shorts">Короткометражки</p>
+                </div>
+            </form>
+        </section>
+    );
 }
 export default SearchForm;

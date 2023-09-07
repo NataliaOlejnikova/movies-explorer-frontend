@@ -6,21 +6,16 @@ const savedMovies = [
   {
     name: 'movie',
     duration: 'movie',
-    img: 'https://www.thenews.com.pk/assets/uploads/updates/2022-12-19/1021612_814112_Untitled-133_updates.jpg',
+    img: 'https://avatars.mds.yandex.net/i?id=844ae563cc976aa2d81a3616fed2ca1129f0fc52-9721849-images-thumbs&n=13',
     isSaved: true,
   },
   {
     name: 'movie',
     duration: 'movie',
-    img: 'https://www.thenews.com.pk/assets/uploads/updates/2022-12-19/1021612_814112_Untitled-133_updates.jpg',
+    img: 'https://avatars.mds.yandex.net/i?id=844ae563cc976aa2d81a3616fed2ca1129f0fc52-9721849-images-thumbs&n=13',
     isSaved: true,
-  },
-  {
-    name: 'movie',
-    duration: 'movie',
-    img: 'https://www.thenews.com.pk/assets/uploads/updates/2022-12-19/1021612_814112_Untitled-133_updates.jpg',
-    isSaved: true,
-  },  
+  }
+  
 ]
 const SavedMovies = () => {
   return (

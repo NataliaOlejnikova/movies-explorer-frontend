@@ -1,26 +1,30 @@
 .navigation {
-  width: 100%;
   display: flex;
-  justify-content: space-between;
   position: relative;
+  width: calc((1058 / 1140) * 100%);
+  background-color: transparent;
 }
 
 .navigation a {
   transition: 0.3s ease;
 }
-
+.navigator__spisok {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 .navigation a:hover {
   opacity: 0.8;
 }
 
 .navigation__movies {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  line-height: 18px;
-  padding: 0;
   margin: 0;
-  width: 100%;
+    padding: 0;
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .navigation__movies a {
@@ -40,6 +44,7 @@
   align-items: center;
   gap: 17px;
   align-self: flex-end;
+  list-style-type: none;
 }
 
 .navigation__movies-link_active {
@@ -54,6 +59,7 @@
   justify-content: flex-end;
   width: 100%;
   margin: 0;
+  list-style-type: none;
 }
 
 .navigation__link {
@@ -62,7 +68,7 @@
   line-height: 16px;
   text-decoration: none;
   margin-right: 30px;
-  color: #000000;
+  color: #FFFFFF;
 }
 
 .navigation__button {
@@ -95,6 +101,10 @@
   margin: 0;
 }
 
+.nav__spisok {
+  list-style-type: none;
+}
+
 .navigation__button_account:hover {
   opacity: 0.8;
 }
@@ -119,7 +129,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .navigation__movies,
+  .navigation__movies,.navigator__spisok,
   .navigation__button-account {
     display: none;
   }
@@ -150,7 +160,7 @@
     margin-right: 0;
     padding-left: 7px;
     border-radius: 20px;
-  background-color: #F9F9F9;
-  line-height: 16px;
+    background-color: #F9F9F9;
+    line-height: 16px;
   }
 }

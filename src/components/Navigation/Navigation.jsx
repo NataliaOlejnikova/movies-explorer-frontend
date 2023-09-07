@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import account from './../../images/icon__COLOR_icon-main.svg';
 import "./Navigation.css";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import { AccountButton } from '../AccountButton/AccountButton';
 
 const Navigation = ({ loggedIn }) => {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ const Navigation = ({ loggedIn }) => {
     <nav className="navigation">
       {loggedIn ? (
         <>
+        <div className="navigator__spisok">
           <ul
             className={
               location === "/"
@@ -43,16 +45,10 @@ const Navigation = ({ loggedIn }) => {
                 Сохранённые фильмы
               </Link>
             </li>
-
+           
           </ul>
-          <ul>
-
-            <li>
-              <Link to="/profile" className="navigation__movies-link navigation__button-account">
-                Аккаунт <img className={"navtab__account-logo"} alt={'Аккаунт'} src={account} />
-              </Link>
-            </li>
-          </ul>
+          <AccountButton />
+          </div>
         </>
       ) : (
         <ul className="navigation__auth">
