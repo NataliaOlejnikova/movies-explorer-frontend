@@ -3,8 +3,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigator from '../Navigation/Navigation';
+import Logot from '../Logot/Logot';
 import './Header.css';
-import logo from '../../images/header-logo.svg';
+
 
 const Header = ({ loggedIn }) => {
   return (
@@ -14,7 +15,7 @@ const Header = ({ loggedIn }) => {
       }`}
     >
       <Link to='/'>
-        <img src={logo} alt='Логотип' className='header__logo' />
+        <Logot />
       </Link>
       <Navigator loggedIn={loggedIn} />
     </header>

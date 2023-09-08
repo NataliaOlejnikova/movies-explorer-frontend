@@ -3,28 +3,33 @@
   position: relative;
   width: calc((1058 / 1140) * 100%);
   background-color: transparent;
+  margin-left: 44px;
 }
 
 .navigation a {
   transition: 0.3s ease;
 }
-.navigator__spisok {
+
+.navigator__spis {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
+
 .navigation a:hover {
   opacity: 0.8;
 }
 
 .navigation__movies {
   margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 16px;
-    list-style: none;
-    justify-content: center;
-    align-items: center;
+  padding: 0;
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .navigation__movies a {
@@ -38,7 +43,7 @@
 .navigation__movies-link {
   font-weight: 400;
   text-decoration: none;
-  margin-right: 16px;
+ 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +55,8 @@
 .navigation__movies-link_active {
   font-weight: 500;
   text-decoration: none;
-  margin-right: 16px;
+  margin-right: 0px;
+  padding-right: 0px;
 }
 
 .navigation__auth {
@@ -129,7 +135,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  .navigation__movies,.navigator__spisok,
+
+  .navigation__movies,
+  .navigator__spisok,
   .navigation__button-account {
     display: none;
   }

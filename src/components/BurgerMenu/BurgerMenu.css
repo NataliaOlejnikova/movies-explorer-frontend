@@ -57,6 +57,7 @@ div.burger {
   gap: 22px;
   margin-top: 160px !important;
   padding-left: 0 !important;
+  list-style-type: none;
 }
 
 .burger-link {

@@ -3,10 +3,10 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer class='footer'>
-      <span className='footer__text'>
-        Учебный проект Яндекс.Практикум х BeatFilm.
-      </span>
+    <footer className='footer'>
+      <h3 className="footer__text">
+          Учебный проект Яндекс.Практикум х BeatFilm.
+        </h3>
       <div className='footer__bottom-block'>
         <span className='footer__copyright'>© 2023</span>
         <ul className='footer__links'>

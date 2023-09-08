@@ -24,7 +24,7 @@ export const SearchForm = () => {
                         />
                         <span className="search-form__checkbox-slider" />
                     </label>
-                    <p className="search-form__shorts">Короткометражки</p>
+                    <label htmlFor="checkbox-mobile" className="search-form__shorts">Короткометражки</label>
                 </div>
             </form>
         </section>

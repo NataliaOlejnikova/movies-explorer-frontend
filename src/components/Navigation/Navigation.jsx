@@ -16,7 +16,7 @@ const Navigation = ({ loggedIn }) => {
     <nav className="navigation">
       {loggedIn ? (
         <>
-        <div className="navigator__spisok">
+        <div className="navigator__spis">
           <ul
             className={
               location === "/"

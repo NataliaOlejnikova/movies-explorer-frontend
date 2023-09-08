@@ -1,73 +1,73 @@
-.page {
+.error {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
 }
 
-.page__info-block {
+.error__container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-around;
+  margin-top: 246px;
+}
+
+.error__title {
+  display: inline-block;
   margin: auto;
-  padding-top: 152px;
-}
-
-.page__status {
-  font-weight: 400;
-  font-size: 140px;
-  line-height: 169px;
-  margin-bottom: 5px;
-  display: block;
-}
-
-.page__notfound {
-  font-size: 16px;
-  line-height: 19px;
   text-align: center;
-}
-
-.page__go-back-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FF6838;
-  text-decoration: none;
+  font-size: 140px;
+  font-style: normal;
   font-weight: 400;
+  line-height: normal;
+}
+
+.error__subtitle {
+  display: inline-block;
+  margin: 5px auto 0 auto;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.error__link {
+  text-decoration: none;
+  color: #FF6838;
+  display: inline-block;
+  margin: 184px auto 0 auto;
   font-size: 14px;
-  line-height: 17px;
-  transition: 0.3s ease;
-  padding-top: 184px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
-.page__go-back-btn:hover {
-  opacity: 0.8;
+.error__link:hover {
+  opacity: 0.7;
+  transition: opacity 0.3s;
 }
-@media screen and (max-width: 768px) {
-  .page__info-block {
-    padding-top: 314px;
+
+@media (max-width: 768px) {
+  .error__container {
+    margin-top: 408px;
   }
 }
 
-@media screen and (max-width: 420px) {
-  .page__info-block {
-    padding-top: 275px;
+@media (max-width: 425px) {
+  .error__container {
+    margin-top: 329px;
   }
-
-  .page__status {
+  .error__title {
     font-size: 80px;
-    line-height: 97px;
-    margin-bottom: 10px;
   }
-
-  .page__notfound {
+  .error__subtitle {
+    margin-top: 10px;
     font-size: 12px;
-    line-height: 15px;
   }
-
-  .page__go-back-btn {
+  .error__link {
+    margin-top: 284px;
     font-size: 12px;
-    line-height: 15px;
-    padding-top: 285px;
   }
 }
