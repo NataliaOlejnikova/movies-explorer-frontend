@@ -1,0 +1,17 @@
+.saved-movies__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+@media screen and (max-width: 768px){
+  .saved-movies__content {
+    margin-bottom: 140px;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .saved-movies__content {
+    margin-bottom: 115px;
+  }
+}
