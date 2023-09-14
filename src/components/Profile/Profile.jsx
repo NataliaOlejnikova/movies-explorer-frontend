@@ -20,8 +20,6 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
     });
   }, [currentUser, setValues, resetForm]);
 
-
-  //разблокировка полей ввода
   function handleEditButton() {
     setIsDisabledInput(false);
   }

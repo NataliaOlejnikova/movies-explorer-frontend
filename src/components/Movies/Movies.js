@@ -31,8 +31,6 @@ function Movies({
     const [isNumberToAddMovies, setIsNumberToAddMovies] = useState(3);
     const [isMoreBtnShown, setIsMoreBtnShown] = useState(true);
     
-
-    //поиск фильмов
     const handleSearchQueryChange = (event) => {
         const query = event.target.value;
         setSearchQuery(query);
@@ -53,13 +51,11 @@ function Movies({
         }, 2000);
     };
 
-    //переключение фильтрации для movies
     const handleChecked = () => {
         setIsChecked(!isChecked);
         localStorage.setItem("checkboxState", JSON.stringify(!isChecked));
     }
 
-    //настройка фильтра отображения короткометражек для movies
     useEffect(() => {
         if (isChecked) {
             setSearchResultsFiltered(searchResults.filter((movie) => movie.duration <= shortMoviesDuration));
@@ -68,7 +64,6 @@ function Movies({
         }
     }, [searchResults, isChecked]);
 
-    //установка кол-ва отображаемых карточек на странице
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 805) {
@@ -94,7 +89,6 @@ function Movies({
         };
     }, []);
 
-    //кнопка "показать ещё"
     const handleChangeMoreBtn = () => {
         if (searchResults.length > isNumberOfMoviesShown) {
             setIsMoreBtnShown(true);
@@ -109,7 +103,6 @@ function Movies({
 
     const displayedMovies = searchResultsFiltered.slice(0, isNumberOfMoviesShown);
 
-    //настройка скрытия кнопки "Ещё"
     useEffect(() => {
         handleChangeMoreBtn();
     }, [loadMore, handleSearch]);

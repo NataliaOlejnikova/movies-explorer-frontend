@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import './App.css';
-import Main from '../Main';
+import Main from '../Main/Main';
 import { Login } from '../Login/Login';
 import { Register } from '../Register/Register';
 import { Profile } from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import Page404 from '../NotFoundPage/NotFoundPage';
+import Page404 from '../Page404/Page404';
 import * as auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
-import { CurrentUserContext } from "../../state/user";
-import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute.js";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function App() {
@@ -94,6 +94,7 @@ function App() {
     tokenCheck();
   }, [loggedIn]);
 
+  // получение списка сохраненных фильмов
   const getSavedMovies = () => {
     mainApi
       .getSavedMovies()
@@ -103,6 +104,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  // получение списка фильмов
   useEffect(() => {
     if (loggedIn) {
       moviesApi
@@ -115,6 +117,7 @@ function App() {
     }
   }, [loggedIn]);
 
+  // сохранение фильма
   const handleSaveMovie = (movie) => {
     mainApi
       .SaveMovie(movie)
@@ -125,6 +128,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  //удаление фильма
   const handleDeleteMovie = (movie) => {
     const id = movie.movieId || movie.id;
     mainApi
@@ -137,6 +141,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  //редактирование профиля
   function editProfileData(data) {
     return mainApi
       .editProfile(data)
@@ -157,6 +162,7 @@ function App() {
       });
   }
 
+  //выход из аккаунта
   function signOut() {
     localStorage.removeItem("searchResults");
     localStorage.removeItem("checkboxState");
