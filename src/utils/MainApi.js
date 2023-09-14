@@ -62,7 +62,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: "react-mesto-backend.nomoreparties.co",
+  baseUrl: "https://react-mesto-backend.nomoreparties.co",
   headers: {
     "content-type": "application/json",
   },
