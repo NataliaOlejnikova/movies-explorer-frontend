@@ -1,0 +1,23 @@
+.header {
+  padding: 18px 70px;
+  display: flex;
+  background-color: inherit;
+  align-items: center; 
+}
+
+.header_type_not-auth {
+  background-color: #465DFF;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 18px 30px 0px;
+  }
+}
+
+
+@media screen and (max-width: 420px) {
+  .header {
+    padding: 18px 14px;
+  }
+}
