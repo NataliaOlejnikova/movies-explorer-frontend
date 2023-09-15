@@ -11,7 +11,6 @@ class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  
 
   editProfile(data) {
     const token = localStorage.getItem('token');
@@ -51,9 +50,9 @@ class MainApi {
     }).then(this._getResult);
   }
 
-  deleteSavedMovie(movieId) {
+  deleteSavedMovie(ownerId) {
     const token = localStorage.getItem('token');
-    return fetch(`${this._url}/movies/${movieId}`, {
+    return fetch(`${this._url}/movies/:${ownerId}`, {
       method: 'DELETE',
       headers: {
         authorization:  `Bearer ${token}`,

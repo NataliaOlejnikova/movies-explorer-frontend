@@ -1,8 +1,8 @@
 import "./Logot.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Logot = () => {
-  return <Link to="/" className="logo__head"></Link>;
+  return <NavLink to="/" className="logo__head"></NavLink>;
 };
 
 export default Logot;

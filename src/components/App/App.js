@@ -119,7 +119,7 @@ function App() {
     mainApi
       .SaveMovie(movie)
       .then((res) => {
-        const updatedSavedMovies = [...savedMovies, { ...res, id: res.movieId }];
+        const updatedSavedMovies = [...savedMovies, { ...res, id: res.ownerId }];
         setSavedMovies(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
