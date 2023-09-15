@@ -19,6 +19,7 @@ function SavedMovies({
   const [isSearchSuccess, setIsSearchSuccess] = useState(true);
   const [isCheckedInSaved, setIsCheckedInSaved] = useState(false);
 
+  //поиск фильмов по сохраненным
   const handleSearchQueryChangeInSaved = (event) => {
     const query = event.target.value;
     console.log(query);
@@ -35,10 +36,12 @@ function SavedMovies({
     setIsSearchSuccess(results.length > 0);
   };
 
+  //переключение фильтрации для saved-movies
   const handleCheckedInSaved = () => {
     setIsCheckedInSaved(!isCheckedInSaved);
   }
 
+  //настройка фильтра отображения короткометражек для saved-movies
   useEffect(() => {
     if (!isSearchDoneInSaved) {
       if (isCheckedInSaved) {

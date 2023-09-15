@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import './MoviesCard.css';
 import { movieURL } from '../../utils/constants';
 
+
 function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
     const location = useLocation();
     const movieDuration = (min) => {
@@ -11,6 +12,7 @@ function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
         const duration = `${h > 0 ? h + "ч" : ""} ${m > 0 ? m + "м" : ""}`;
         return duration.trim();
     };
+    const movieImageUrl = typeof movie.image === 'string' ? movie.image : `https://api.nomoreparties.co/${movie.image.url}`;
 
     const isSaved = savedMovie.some(m => m.movieId === movie.id);
 
@@ -37,11 +39,11 @@ function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
     }
 
     return (
-        <div className='card'>
-            <div className='card__header'>
-                <div className='card__description'>
-                    <h2 className='card__title'>{movie.nameRU}</h2>
-                    <p className='card__duration'>{movieDuration(movie.duration)}</p>
+        <div className='movie'>
+            <div className='movie__header'>
+                <div className='movie__description'>
+                    <h2 className='movie__title'>{movie.nameRU}</h2>
+                    <p className='movie__duration'>{movieDuration(movie.duration)}</p>
                 </div>
                 {location.pathname === "/movies" &&
                     <button type="button"
@@ -54,8 +56,8 @@ function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
                         onClick={() => onMovieDelete(movie)}>
                     </button>}
             </div>
-            <NavLink to={movie.trailerLink.replace('https:', '')} target='_blank' className="movie__treiler">
-                <img className='movie__thumbnail' alt="постер фильма" src={movie.image.url ? `${movieURL}${movie.image.url}` : movie.image} />
+            <NavLink to={movie.trailerLink} target='_blank' className="movie__treiler">
+                <img className='movie__thumbnail' alt="постер фильма" src={movieImageUrl} />
             </NavLink>
         </div>
     );

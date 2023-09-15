@@ -11,6 +11,8 @@ class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  
+
   editProfile(data) {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/users/me`, {
@@ -54,7 +56,7 @@ class MainApi {
     return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization:  `Bearer ${token}`,
       },
     })
       .then(this._getResult);
@@ -62,7 +64,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: "https://react-mesto-backend.nomoreparties.co",
+  baseUrl: 'https://react-mesto-backend.nomoreparties.co',
   headers: {
     "content-type": "application/json",
   },

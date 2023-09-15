@@ -1,4 +1,4 @@
-.card {
+.movie {
   max-width: 364px;
   background-color: #fdfdfd;
   position: relative;
@@ -8,7 +8,7 @@
   justify-content: space-between;
 }
 
-.card__header {
+.movie__header {
   max-width: 100%;
   min-height: 68px;
   display: grid;
@@ -18,7 +18,7 @@
   align-items: center;
 }
 
-.card__description {
+.movie__description {
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -28,7 +28,7 @@
   text-overflow: ellipsis;
 }
 
-.card__title {
+.movie__title {
  
   font-size: 15px;
   font-style: normal;
@@ -38,7 +38,7 @@
   color: black;
 }
 
-.card__duration {
+.movie__duration {
   color: #a0a0a0;
   font-size: 11px;
   font-weight: 400;
@@ -80,11 +80,11 @@
 }
 
 @media screen and (max-width: 805px) {
-  .card {
+  .movie {
     max-width: 339px;
   }
 
-  .card__header {
+  .movie__header {
     grid-template-columns: 250px 30px;
   }
 
@@ -94,12 +94,12 @@
 }
 
 @media screen and (max-width: 450px) {
-  .card {
+  .movie {
     width: 300px;
     height: 236px;
   }
 
-  .card__header {
+  .movie__header {
     grid-template-columns: 210px 30px;
   }
 
