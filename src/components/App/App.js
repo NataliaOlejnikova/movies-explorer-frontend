@@ -125,6 +125,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+
   const handleDeleteMovie = (movie) => {
     const id = movie.movieId || movie.id;
     mainApi
