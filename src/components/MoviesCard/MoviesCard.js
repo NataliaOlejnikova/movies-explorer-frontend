@@ -1,60 +1,64 @@
-import './MoviesCard.css'
-import cross from '../../images/delete-icon.svg'
-import { MOVIE_URL } from '../../utils/MoviesApi'
+import { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import './MoviesCard.css';
+import { movieURL } from '../../utils/constants';
 
-const MoviesCard = ({
-  movie,
-  isShowSaveBtn = true,
-  isShowDeleteBtn = false,
-  onSaveMovie,
-  onDeleteMovie,
-  movieIsSaved,
-}) => {
-  return (
-    <li className="card">
-      <div className="col">
-        <div className="card__header">
-          <div className="card__description row">
-            <h2 className="card__name">{movie.nameRU}</h2>
-            <span className="card__duration">{getMoviesTime(movie.duration)}</span>
-          </div>
-          <div className='row'>
-          {isShowSaveBtn && (
-            <button
-              type="button"
-              onClick={() => movieIsSaved(movie) ? onDeleteMovie(movie) : onSaveMovie(movie)}
-              className={`card__button ${
-                movieIsSaved(movie) ? 'card__button_saved' : 'card__button_unsaved'
-              }`}
-            />
-          )}
-          {isShowDeleteBtn && (
-            <button
-              type="button"
-              onClick={() => onDeleteMovie(movie)}
-              className="card__button card__delete"
-            >
-              <img src={cross} alt="кнопка удалить" />
-            </button>
-          )}
-          </div>
+function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
+    const location = useLocation();
+    const movieDuration = (min) => {
+        const m = min % 60;
+        const h = Math.floor(min / 60);
+        const duration = `${h > 0 ? h + "ч" : ""} ${m > 0 ? m + "м" : ""}`;
+        return duration.trim();
+    };
 
+    const isSaved = savedMovie.some(m => m.movieId === movie.id);
+
+    function activeMovieSave() {
+        if (!isSaved) {
+            onMovieSave(
+                {
+                    country: movie.country,
+                    director: movie.director,
+                    duration: movie.duration,
+                    year: movie.year,
+                    description: movie.description,
+                    image: `${movieURL}${movie.image.url}`,
+                    trailerLink: movie.trailerLink,
+                    thumbnail: `${movieURL}${movie.image.formats.thumbnail.url}`,
+                    movieId: movie.id,
+                    nameRU: movie.nameRU,
+                    nameEN: movie.nameEN,
+                }
+            );
+        } else if (isSaved) {
+            onMovieDelete(movie);
+        }
+    }
+
+    return (
+        <div className='movie'>
+            <div className='movie__header'>
+                <div className='movie__description'>
+                    <h2 className='movie__title'>{movie.nameRU}</h2>
+                    <p className='movie__duration'>{movieDuration(movie.duration)}</p>
+                </div>
+                {location.pathname === "/movies" &&
+                    <button type="button"
+                        className={`movie__button movie__button_type_save ${isSaved ? 'movie__button_type_save_active' : 'movie__button_type_save'}`}
+                        onClick={activeMovieSave}>
+                    </button>}
+                {location.pathname === "/saved-movies" &&
+                    <button type="button"
+                        className="movie__button movie__button_type_delete"
+                        onClick={() => onMovieDelete(movie)}>
+                    </button>}
+            </div>
+            <NavLink to={movie.trailerLink.replace('https:', '')} target='_blank' className="movie__treiler">
+                <img className='movie__thumbnail' alt="постер фильма" src={movie.image.url ? `${movieURL}${movie.image.url}` : movie.image} />
+            </NavLink>
         </div>
-      </div>
-      <div className='card__in col'>
-      <a className="card__link" target="_blank" rel="noreferrer" href={movie.trailerLink}>
-        <img
-          src={
-            movie.thumbnail ||
-            `${MOVIE_URL}${movie.image.formats.thumbnail.url}`
-          }
-          alt={`Обложка фильма: ${movie.image.alternativeText}`}
-          className="card__image"
-        />
-      </a>
-      </div>
-    </li>
-  )
+    );
 }
 
-export default MoviesCard
+export default MoviesCard;

@@ -11,15 +11,10 @@ class MoviesApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  async getMovies() {
-    const resp = await fetch(`${this._url}/beatfilm-movies`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    return this._response(resp)
+  getMovies() {
+    return fetch(`${this._url}/beatfilm-movies`, {
+      headers: this._headers,
+    }).then(this._getResult);
   }
 }
 
