@@ -1,221 +1,226 @@
-import { useState, useEffect } from 'react';
-import {
-  Route,
-  Routes,
-  useNavigate,
-  useLocation,
-} from 'react-router-dom';
-import Main from '../../pages/Main/Main';
-import Movies from '../../pages/Movies/Movies';
-import SavedMovies from '../../pages/SavedMovies/SavedMovies';
-import Profile from '../../pages/Profile/Profile';
-import SignUp from '../../pages/SignUp/SignUp';
-import SignIn from '../../pages/SignIn/SignIn';
-import NotFound from '../../pages/NotFound/NotFound';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
-import mainApi from '../../utils/MainApi';
-import Preloader from '../Preloader/Preloader';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import UnauthorizedRoute from '../UnauthorizedRoute/UnauthorizedRoute';
+import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import './App.css';
+import Main from '../Main';
+import { Login } from '../Login/Login';
+import { Register } from '../Register/Register';
+import { Profile } from '../Profile/Profile';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Page404 from '../NotFoundPage/NotFoundPage';
+import * as auth from "../../utils/auth";
+import mainApi from "../../utils/MainApi";
+import moviesApi from "../../utils/MoviesApi";
+import { CurrentUserContext } from "../../state/user";
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittingError, setSubmittingError] = useState('');
-
-  const [currentUser, setCurrentUser] = useState();
-  const [savedMovies, setSavedMovies] = useState([]);
-
   const navigate = useNavigate();
   const location = useLocation();
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+  });
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  function handleSignIn({ email, password }) {
-    setIsSubmitting(true);
-    setSubmittingError('');
-    mainApi.signIn({ email, password })
-      .then(() => {
-        setCurrentUser({ email });
-        navigate('/movies', { replace: true });
+  const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [statusInfoTooltip, setStatusInfoTooltip] = useState(false);
+
+  const [error, setError] = useState("");
+
+  const handleLogin = (email, password) => {
+    auth
+      .authorize(email, password)
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+        setLoggedIn(true);
+        navigate("/movies");
       })
       .catch((err) => {
-        if (err.message.includes('401')) {
-          setSubmittingError('Указана неправильная почта или пароль');
-        } else {
-          setSubmittingError('Что-то пошло не так! Попробуйте ещё раз.');
+        console.log(err);
+        if (err === 'Ошибка: 401') {
+          setError('Неправильный логин или пароль');
         }
-        console.log(err);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  }
-
-  function handleSignUp({ email, password, name }) {
-    setIsSubmitting(true);
-    setSubmittingError('');
-    mainApi.signUp({ email, password, name })
-      .then(() => handleSignIn({ email, password }))
-      .catch((err) => {
-        if (err.message.includes('409')) {
-          setSubmittingError('Пользователь с указанным email уже зарегистрирован');
-        } else if (err.message.includes('400')) {
-          setSubmittingError('Переданы некорректные данные при создании пользователя');
-        } else {
-          setSubmittingError('Что-то пошло не так! Попробуйте ещё раз.');
+        if (err === 'Ошибка: 500') {
+          setError('На сервере произошла ошибка');
         }
-        console.log(err);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  }
-
-  function handleUpdateUser({ email, name }) {
-    setIsSubmitting(true);
-    setSubmittingError('');
-    mainApi.updateUser({ email, name })
-      .then((user) => {
-        setCurrentUser(user);
-      })
-      .catch((err) => {
-        if (err.message.includes('409')) {
-          setSubmittingError('Пользователь с указанным email уже зарегистрирован');
-        } else if (err.message.includes('400')) {
-          setSubmittingError('Переданы некорректные данные при обновлении профиля');
-        } else {
-          setSubmittingError('Что-то пошло не так! Попробуйте ещё раз.');
+        else {
+          setError('При авторизации пользователя произошла ошибка');
         }
-        console.log(err);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
       });
-  }
+  };
 
-  function handleAddMovie(movie) {
-    mainApi.addMovie(movie)
-      .then((addedMovie) => {
-        setSavedMovies((prev) => [...prev, addedMovie]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function handleDeleteMovie(movie) {
-    const { _id: deleteId } = savedMovies.find(({ movieId }) => movie.movieId === movieId);
-    mainApi.deleteMovie(deleteId)
+  const handleRegister = (name, email, password) => {
+    return auth
+      .register(name, email, password)
       .then(() => {
-        setSavedMovies((prev) => prev.filter(({ _id }) => _id !== deleteId));
+        handleLogin(email, password);
       })
       .catch((err) => {
         console.log(err);
-      });
-  }
-
-  function handleSignOut() {
-    setIsLoading(true);
-    mainApi.signOut()
-      .then(() => {
-        setCurrentUser();
-        localStorage.clear();
+        if (err === 'Ошибка: 409') {
+          setError('Пользователь с таким email уже существует');
+        } else if (err === 'Ошибка: 500') {
+          setError('На сервере произошла ошибка');
+        } else {
+          setError('При регистрации пользователя произошла ошибка');
+        }
       })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
+  };
 
-  useEffect(() => {
-    if (!currentUser || !currentUser._id) {
-      setIsLoading(true);
-      mainApi.getUser()
-        .then((userInfo) => {
-          setCurrentUser(userInfo);
+  const tokenCheck = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      auth
+        .getContent(token)
+        .then((res) => {
+          if (res) {
+            setCurrentUser(res);
+            setLoggedIn(true);
+            navigate(location.pathname, { replace: true });
+          } else {
+            setLoggedIn(false);
+          }
         })
-        .then(() => mainApi.getMovies())
-        .then((movies) => {
-          setSavedMovies(movies);
-        })
-        .catch((err) => {
-          setCurrentUser();
-          setSavedMovies([]);
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+        .catch((err) => console.log(err));
     }
-  }, [currentUser]);
+  };
 
   useEffect(() => {
-    setSubmittingError('');
-  }, [location]);
+    tokenCheck();
+  }, [loggedIn]);
+
+  const getSavedMovies = () => {
+    mainApi
+      .getSavedMovies()
+      .then((res) => {
+        setSavedMovies(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    if (loggedIn) {
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          setMovies(res);
+        })
+        .catch((err) => console.log(err));
+      getSavedMovies();
+    }
+  }, [loggedIn]);
+
+  const handleSaveMovie = (movie) => {
+    mainApi
+      .SaveMovie(movie)
+      .then((res) => {
+        const updatedSavedMovies = [...savedMovies, { ...res, id: res.movieId }];
+        setSavedMovies(updatedSavedMovies);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const handleDeleteMovie = (movie) => {
+    const id = movie.movieId || movie.id;
+    mainApi
+      .deleteSavedMovie(id)
+      .then(() => {
+        const updatedSavedMovies = savedMovies.filter(m => m.movieId !== id);
+        setSavedMovies(updatedSavedMovies);
+        console.log(updatedSavedMovies);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function editProfileData(data) {
+    return mainApi
+      .editProfile(data)
+      .then((res) => {
+        setCurrentUser(res);
+        setStatusInfoTooltip(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err) {
+          setError("При обновлении профиля произошла ошибка.");
+        }
+        setStatusInfoTooltip(false);
+        return err;
+      })
+      .finally(() => {
+        setIsInfoTooltipPopupOpen(true);
+      });
+  }
+
+  function signOut() {
+    localStorage.removeItem("searchResults");
+    localStorage.removeItem("checkboxState");
+    localStorage.removeItem("searchQuery");
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setCurrentUser({});
+    navigate("/");
+  }
+
+  function closeAllPopups() {
+    setIsInfoTooltipPopupOpen(false);
+  }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      {isLoading
-        ? <Preloader />
-        : (
-          <Routes>
-            <Route path="/" element={(
-              <Main />
-            )} />
-            <Route path="/movies" element={(
-              <ProtectedRoute>
-                <Movies
-                  savedMovies={savedMovies}
-                  onAddMovie={handleAddMovie}
-                  onDeleteMovie={handleDeleteMovie}
-                />
-              </ProtectedRoute>
-            )} />
-            <Route path="/saved-movies" element={(
-              <ProtectedRoute>
-                <SavedMovies
-                  savedMovies={savedMovies}
-                  onDeleteMovie={handleDeleteMovie}
-                />
-              </ProtectedRoute>
-            )} />
-            <Route path="/profile" element={(
-              <ProtectedRoute>
-                <Profile
-                  isSubmitting={isSubmitting}
-                  submittingError={submittingError}
-                  onSubmit={handleUpdateUser}
-                  onSignOut={handleSignOut}
-                />
-              </ProtectedRoute>
-            )} />
-            <Route path="/signup" element={(
-              <UnauthorizedRoute>
-                <SignUp
-                  isSubmitting={isSubmitting}
-                  submittingError={submittingError}
-                  onSubmit={handleSignUp}
-                />
-              </UnauthorizedRoute>
-            )} />
-            <Route path="/signin" element={(
-              <UnauthorizedRoute>
-                <SignIn
-                  isSubmitting={isSubmitting}
-                  submittingError={submittingError}
-                  onSubmit={handleSignIn}
-                />
-              </UnauthorizedRoute>
-            )} />
-            <Route path="*" element={(
-              <NotFound />
-            )} />
-          </Routes>
-        )
-      }
-    </CurrentUserContext.Provider>
+    <div className='page'>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route path="/" element={<Main loggedIn={loggedIn} />} />
+          <Route
+            path="/signup"
+            element={<Register handleRegister={handleRegister} error={error} setError={setError} />}
+          />
+          <Route
+            path="/signin"
+            element={<Login handleLogin={handleLogin} error={error} setError={setError} />}
+          />
+          <Route path="*" element={<Page404 />} />
+          <Route path="/movies" element={
+            <ProtectedRouteElement
+              element={Movies}
+              movies={movies}
+              loggedIn={loggedIn}
+              onMovieSave={handleSaveMovie}
+              savedMovie={savedMovies}
+              onMovieDelete={handleDeleteMovie}
+            />
+          } />
+          <Route path="/saved-movies" element={
+            <ProtectedRouteElement
+              element={SavedMovies}
+              movies={movies}
+              savedMovies={savedMovies}
+              onMovieDelete={handleDeleteMovie}
+              loggedIn={loggedIn}
+            />
+          } />
+          <Route path="/profile" element={
+            <ProtectedRouteElement
+              element={Profile}
+              onEditProfile={editProfileData}
+              signOut={signOut}
+              loggedIn={loggedIn}
+              error={error}
+            />
+          } />
+        </Routes>
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          status={statusInfoTooltip}
+        />
+      </CurrentUserContext.Provider>
+    </div>
   );
 }
 

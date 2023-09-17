@@ -1,167 +1,160 @@
-.student {
-  padding: 110px 70px 50px;
+.about-me {
+  padding: 110px 70px 100px 70px;
 }
 
-.student__title {
-  margin: 0;
+.about-me__title {
+  display: block;
+  font-weight: 400;
   font-size: 22px;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.88px;
-  padding-bottom: 23px;
-  border-bottom: 1px solid #000000;
-}
-
-.student__about {
-  display: flex;
-  flex-direction: row;
-  gap: 270px;
-  margin-top: 66px;
-}
-
-.student__info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.student__name {
-  margin: 0;
-  font-size: 50px;
-  font-weight: 400;
-  line-height: 1.16;
-  letter-spacing: -2px;
-}
-
-.student__job {
-  margin: 18px 0 0;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.11;
-}
-
-.student__biography {
-  margin: 26px 0 0;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.57;
-  flex: 1;
-}
-
-.student__image-container {
-  font-size: 0;
-  min-width: 270px;
-  min-height: 327px;
-}
-
-.student__image {
-  border-radius: 10px;
-  width: 270px;
-  height: 327px;
-  object-fit: cover;
-}
-
-.student__link {
-  text-decoration: none;
+  line-height: 27px;
+  letter-spacing: -0.04em;
   color: #000000;
-  cursor: pointer;
-  margin-top: 26px;
-  font-size: 14px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #000;
+  margin: 0 0 66px 0;
+}
+
+.about-me__content {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 30px;
+}
+
+.about-me__info {
+  width: 53%;
+}
+
+.about-me__name {
+  display: block;
+  margin: 0 0 18px 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  color: #000000;
+}
+
+.about-me__job {
+  display: block;
+  margin-bottom: 26px;
+  font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  font-size: 18px;
+  line-height: 20px;
+  color: #000000;
 }
 
-.student__link:hover {
-  opacity: 0.6;
+.about-me__bio {
+  display: block;
+  margin-bottom: 99px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000000;
 }
 
-@media screen and (max-width: 1023px) {
-  .student {
-    padding: 90px 50px 45px;
+.about-me__link {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  text-decoration: none;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.about-me__link:first-of-type {
+  margin-right: 20px;
+}
+
+.about-me__link:hover {
+  opacity: 0.7;
+}
+
+.about-me__photo {
+  width: 100%;
+  max-width: 270px;
+  height: 327px;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .about-me {
+    padding: 90px 50px;
   }
 
-  .student__about {
-    gap: 50px;
-  }
-
-  .student__name {
+  .about-me__name {
+    margin-bottom: 16px;
     font-size: 40px;
-    line-height: 1;
-    letter-spacing: -1.6px;
+    line-height: 40px;
   }
 
-  .student__job {
-    margin: 16px 0 0;
+  .about-me__job {
+    margin-bottom: 20px;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 18px;
   }
 
-  .student__biography {
-    margin: 20px 0 0;
+  .about-me__bio {
+    margin-bottom: 87px;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 18px;
   }
 
-  .student__image-container {
-    min-width: 255px;
-    min-height: 307px;
-  }
-
-  .student__image {
-    border-radius: 10px;
-    width: 255px;
+  .about-me__photo {
+    max-width: 255px;
     height: 307px;
-    object-fit: cover;
+  }
+
+  .about-me__info {
+    width: 60%;
   }
 }
 
-@media screen and (max-width: 767px) {
-  .student {
-    padding: 70px 14px 35px;
+@media screen and (max-width: 520px) {
+  .about-me {
+    padding: 73px 14px 70px 14px;
   }
 
-  .student__title {
+  .about-me__title {
     font-size: 18px;
-    letter-spacing: -0.72px;
-    padding-bottom: 28px;
+    line-height: 22px;
+    padding-bottom: 26px;
+    margin: 0 0 60px 0;
   }
 
-  .student__about {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 40px;
-    margin-top: 60px;
-
+  .about-me__content {
+    flex-direction: column;
   }
 
-  .student__image-container {
-    min-width: 292px;
-    min-height: 352px;
+  .about-me__info {
+    width: 100%;
+    order: 2;
   }
 
-  .student__image {
-    width: 292px;
+  .about-me__photo {
+    max-width: 292px;
     height: 352px;
+    display: flex;
+    margin: 0 auto 40px;
   }
 
-  .student__name {
+  .about-me__name {
     font-size: 30px;
-    line-height: normal;
-    letter-spacing: -1.2px;
+    line-height: 36px;
+    margin-bottom: 20px;
   }
 
-  .student__job {
-    margin: 20px 0 0;
+  .about-me__job {
     font-size: 11px;
-    line-height: 1.45;
+    line-height: 16px;
   }
 
-  .student__biography {
+  .about-me__bio {
+    margin-bottom: 40px;
     font-size: 11px;
-    line-height: 1.45;
-  }
-
-  .student__link {
-    margin-top: 40px;
+    line-height: 16px;
   }
 }

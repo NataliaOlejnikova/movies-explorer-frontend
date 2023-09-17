@@ -1,60 +1,71 @@
-import BaseApi from './BaseApi';
-import { mainApiConfig } from './constants';
-
-class MainApi extends BaseApi {
-  getMovies() {
-    return this._fetch('/movies', {
-      method: 'GET',
-    });
+class MainApi {
+  constructor({ baseUrl, headers }) {
+    this._url = baseUrl;
+    this._headers = headers;
   }
 
-  addMovie(movie) {
-    return this._fetch('/movies', {
-      method: 'POST',
-      body: JSON.stringify(movie),
-    });
+  _getResult(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  deleteMovie(movieId) {
-    return this._fetch(`/movies/${movieId}`, {
+  editProfile(data) {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+      }),
+    }).then(this._getResult);
+  }
+
+  SaveMovie(data) {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data)
+    }).then(this._getResult);
+  }
+
+  getSavedMovies() {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then(this._getResult);
+  }
+
+  deleteSavedMovie(movieId) {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
-    });
-  }
-
-  getUser() {
-    return this._fetch('/users/me', {
-      method: 'GET',
-    });
-  }
-
-  updateUser({ name, email }) {
-    return this._fetch('/users/me', {
-      method: 'PATCH',
-      body: JSON.stringify({ name, email }),
-    });
-  }
-
-  signUp({ email, password, name }) {
-    return this._fetch('/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email, password, name }),
-    });
-  }
-
-  signIn({ email, password }) {
-    return this._fetch('/signin', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    });
-  }
-
-  signOut() {
-    return this._fetch('/signout', {
-      method: 'POST',
-    });
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then(this._getResult);
   }
 }
 
-const mainApi = new MainApi(mainApiConfig);
+const mainApi = new MainApi({
+  baseUrl: "https://api.movies.kelendis.nomoreparties.co",
+  headers: {
+    "content-type": "application/json",
+  },
+});
 
 export default mainApi;
