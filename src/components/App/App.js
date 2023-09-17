@@ -95,16 +95,7 @@ function App() {
     tokenCheck();
   }, [loggedIn]);
 
-  const getMovies = async () => {
-    moviesApi
-      .getMovies()
-      .then((res) => {
-        setMovies(res);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  const getSavedMovies = async () => {
+  const getSavedMovies = () => {
     mainApi
       .getSavedMovies()
       .then((res) => {
@@ -115,7 +106,13 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      getMovies().then(() => getSavedMovies());
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          setMovies(res);
+        })
+        .catch((err) => console.log(err));
+      getSavedMovies();
     }
   }, [loggedIn]);
 
@@ -137,7 +134,7 @@ function App() {
 
   useEffect(() => {
     updateMovies()
-  }, [movies, setMovies])
+  }, [movies, savedMovies])
 
   const handleSaveMovie = (movie) => {
     mainApi
@@ -145,8 +142,6 @@ function App() {
       .then((res) => {
         const updatedSavedMovies = [...savedMovies, { ...res.data, id: res.data.movieId }];
         setSavedMovies(updatedSavedMovies);
-
-        getSavedMovies().then(() => updateMovies());
       })
       .catch((err) => console.log(err));
   }
@@ -213,10 +208,10 @@ function App() {
           <Route path="/movies" element={
             <ProtectedRouteElement
               element={Movies}
-              movies={newMovies}
+              movies={movies}
               loggedIn={loggedIn}
               onMovieSave={handleSaveMovie}
-              savedMovies={savedMovies}
+              savedMovie={savedMovies}
               onMovieDelete={handleDeleteMovie}
             />
           } />

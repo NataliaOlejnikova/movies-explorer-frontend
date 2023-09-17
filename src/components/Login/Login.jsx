@@ -18,13 +18,13 @@ export function Login({ handleLogin, error, setError }) {
 
   return (
     <section className="login">
-      <div className="login__header">
-        <a href="/">
+      <div className="login__header" onSubmit={handleSubmit}>
+      <a href="/">
           <img src={logo} alt="Логотип" className="login__logo" />
         </a>
         <h1 className="login__title">Рады видеть!</h1>
-      </div>
-      <form className="login__form form" onSubmit={handleSubmit}>
+        </div>
+        <form className="login__form form">
         <label className="login__label">E-mail</label>
         <input
           type="email"
@@ -36,6 +36,8 @@ export function Login({ handleLogin, error, setError }) {
           pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
           onChange={handleChange}
           required
+          value={values.email || ''}
+          error={errors.email}
         ></input>
         <span className='login__error'>{errors.email}</span>
         <label className="login__label">Пароль</label>
@@ -46,6 +48,8 @@ export function Login({ handleLogin, error, setError }) {
           minLength="8"
           maxLength="30"
           placeholder="Пароль"
+          value={values.password || ''}
+          error={errors.password}
           onChange={handleChange}
           required
         ></input>
@@ -57,10 +61,9 @@ export function Login({ handleLogin, error, setError }) {
           disabled={!isValid}>
           Войти
         </button>
-      </form>
-      <p className="login__link-text">Ещё не зарегистрированы?
-        <Link className="login__link" to="/signup">Регистрация</Link>
-      </p>
+        </form>
+        <p className="login__link-text">Ещё не зарегистрированы? <Link className="login__link" to="/signup">Регистрация</Link></p>
+      
     </section>
   );
 }
