@@ -1,51 +1,62 @@
-import { useState } from "react";
+import { useRef, useState } from 'react';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
-import Checkbox from '../CheckBox/Checkbox';
 
-function SearchForm({ searchQuery, onChange, handleSearch, isChecked, onCheckboxUpdated }) {
-    const [searchError, setSearchError] = useState("");
+function SearchForm({
+  searchQuery,
+  isShortMovie,
+  onSearch,
+  allowEmpty,
+}) {
+  const input = useRef();
+  const [isEmpty, setIsEmpty] = useState(false);
 
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        if (searchQuery === undefined || searchQuery === "") {
-            setSearchError('Нужно ввести ключевое слово');
-        } else {
-            handleSearch(searchQuery);
-            setSearchError("");
-        }
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!allowEmpty) {
+      setIsEmpty(!input.current.value);
     }
+    onSearch(input.current.value, isShortMovie);
+  }
 
-    return (
-        <section className='search'>
-            <form className='search__form'
-                onSubmit={handleSubmit}
-                noValidate>
-                <div className='search__container'>
-                    <div className='search__icon'></div>
-                    <input
-                        type="text"
-                        className="search__field"
-                        name="movie"
-                        placeholder="Фильм"
-                        value={searchQuery}
-                        onChange={onChange}
-                        required
-                    ></input>
-                    <button
-                        className='search__btn'
-                        type="submit"
-                    ></button>
-                </div>
-            </form>
-            <div className="search__span-container">
-                <span
-                    className="search__field-error">
-                    {searchError}
-                </span>
-            </div>
-            <Checkbox isChecked={isChecked} onChange={onCheckboxUpdated} />
-        </section>
-    );
+  function handleChange() {
+    if (!allowEmpty) {
+      setIsEmpty(!input.current.value);
+    }
+  }
+
+  function handleChangeIsShort(isShort) {
+    onSearch(input.current.value, isShort);
+  }
+
+  return (
+    <section>
+      <form className="search-form" onSubmit={handleSubmit}>
+        <div className="search-form__field">
+          <input
+            ref={input}
+            type="text"
+            name="searchQuery"
+            className={`search-form__input ${isEmpty ? 'search-form__input_error' : ''}`}
+            placeholder="Фильм"
+            defaultValue={searchQuery || ''}
+            onChange={handleChange}
+          />
+          <button
+            className="search-form__button"
+            type="submit"
+            aria-label="Искать"
+          />
+        </div>
+        {isEmpty && (
+          <div className="search-form__error">Нужно ввести ключевое слово</div>
+        )}
+        <div className="search-form__checkbox-container">
+          <FilterCheckbox value={isShortMovie} onChange={handleChangeIsShort} />
+        </div>
+      </form>
+    </section>
+  );
 }
 
 export default SearchForm;

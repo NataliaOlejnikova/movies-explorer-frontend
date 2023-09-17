@@ -1,0 +1,55 @@
+.field {
+  display: block;
+  position: relative;
+}
+
+.field__text {
+  display: block;
+  margin-bottom: 10px;
+  color: #A0A0A0;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.field__input {
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  padding: 15px;
+  width: 100%;
+  background-color: #F9F9F9;
+  color: #000000;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.23;
+}
+
+.field__input:focus {
+  outline: 1px solid #2BE080;
+}
+
+.field__input_error {
+  color: #EE3465;
+}
+
+.field__input_error:focus {
+  outline: 1px solid #EE3465;
+}
+
+.field__error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: block;
+  margin-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  color: #EE3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+

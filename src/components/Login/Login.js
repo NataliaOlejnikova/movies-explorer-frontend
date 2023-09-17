@@ -4,10 +4,10 @@ import Title from '../Title/Title';
 import Field from '../ErrorInput/Field';
 import Button from '../Button/Button';
 import useFormValidation from '../../utils/useFormValidation';
-import { NAME_PATTERN, EMAIL_PATTERN } from '../../utils/constants';
-import './Register.css';
+import { EMAIL_PATTERN } from '../../utils/constants';
+import './Login.css';
 
-function Register({ isSubmitting, submittingError, onSubmit }) {
+function Login({ isSubmitting, submittingError, onSubmit }) {
   const {
     values,
     errors,
@@ -21,23 +21,11 @@ function Register({ isSubmitting, submittingError, onSubmit }) {
   }
 
   return (
-    <main className="register">
-      <section className="register__content">
-        <Logo className="register__logo" />
-        <Title className="register__title">Добро пожаловать!</Title>
-        <form className="register__form" onSubmit={handleSubmit}>
-          <Field
-            label="Имя"
-            type="text"
-            name="name"
-            minLength="2"
-            maxLength="30"
-            pattern={NAME_PATTERN}
-            required
-            value={values.name || ''}
-            error={errors.name}
-            onChange={handleChange}
-          />
+    <main className="login">
+      <section className="login__content">
+        <Logo className="login__logo" />
+        <Title className="login__title">Рады видеть!</Title>
+        <form className="login__form" onSubmit={handleSubmit}>
           <Field
             label="E-mail"
             type="email"
@@ -62,23 +50,23 @@ function Register({ isSubmitting, submittingError, onSubmit }) {
             onChange={handleChange}
           />
           {submittingError && (
-            <p className="register__error">{submittingError}</p>
+            <p className="login__error">{submittingError}</p>
           )}
           <Button
             type="submit"
-            className="register__button"
+            className="login__button"
             disabled={isSubmitting || !isValid}>
-            {isSubmitting ? 'Регистрация...' : 'Зарегистрироваться'}
+            {isSubmitting ? 'Вход...' : 'Войти'}
           </Button>
         </form>
-        <p className="register__text">
-          Уже зарегистрированы?
+        <p className="login__text">
+          Ещё не зарегистрированы?
           {' '}
-          <Link className="register__text-link" to="/signin">Войти</Link>
+          <Link className="login__text-link" to="/signup">Регистрация</Link>
         </p>
       </section>
     </main>
   );
 }
 
-export default Register;
+export default Login;
