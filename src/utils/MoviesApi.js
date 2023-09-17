@@ -1,28 +1,14 @@
-class MoviesApi {
-  constructor({ baseUrl, headers }) {
-    this._url = baseUrl;
-    this._headers = headers;
-  }
+import BaseApi from './BaseApi';
+import { moviesApiConfig } from './constants';
 
-  _getResult(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-
+class MoviesApi extends BaseApi {
   getMovies() {
-    return fetch(`${this._url}/beatfilm-movies`, {
-      headers: this._headers,
-    }).then(this._getResult);
+    return this._fetch('/beatfilm-movies', {
+      method: 'GET',
+    });
   }
 }
 
-const moviesApi = new MoviesApi({
-  baseUrl: "https://api.nomoreparties.co",
-  headers: {
-    "content-type": "application/json",
-  },
-});
+const moviesApi = new MoviesApi(moviesApiConfig);
 
 export default moviesApi;
