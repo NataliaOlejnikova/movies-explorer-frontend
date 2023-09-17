@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.movies.kelendis.nomoreparties.co";
+export const BASE_URL = "react-mesto-backend.nomoreparties.co";
 
 export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {

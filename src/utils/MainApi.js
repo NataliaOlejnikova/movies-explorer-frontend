@@ -4,10 +4,14 @@ class MainApi {
     this._headers = headers;
   }
 
-  _getResult(res) {
+  _getResult(res, isHtml = false) {
+    if (isHtml) {
+      return res
+    }
     if (res.ok) {
       return res.json();
     }
+
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
@@ -57,12 +61,12 @@ class MainApi {
         authorization: `Bearer ${token}`,
       },
     })
-      .then(this._getResult);
+      .then((res) => this._getResult(res, true));
   }
 }
 
 const mainApi = new MainApi({
-  baseUrl: "https://api.movies.kelendis.nomoreparties.co",
+  baseUrl: "react-mesto-backend.nomoreparties.co",
   headers: {
     "content-type": "application/json",
   },

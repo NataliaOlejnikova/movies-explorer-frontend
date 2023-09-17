@@ -25,6 +25,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const [movies, setMovies] = useState([]);
+  const [newMovies, setNewMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
 
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
@@ -115,24 +116,43 @@ function App() {
     }
   }, [loggedIn]);
 
+  const updateMovies = () => {
+    if (movies && savedMovies) {
+      const newState = movies.map(movie => {
+        const foundIndex = savedMovies.findIndex(savedMovie => savedMovie.movieId === movie.id);
+
+        if (foundIndex >= 0) {
+          return {...movie, _id: savedMovies[foundIndex]._id}
+        }
+
+        return movie
+      })
+
+      setNewMovies(newState);
+    }
+  }
+
+  useEffect(() => {
+    updateMovies()
+  }, [movies, savedMovies])
+
   const handleSaveMovie = (movie) => {
     mainApi
       .SaveMovie(movie)
       .then((res) => {
-        const updatedSavedMovies = [...savedMovies, { ...res, id: res.movieId }];
+        const updatedSavedMovies = [...savedMovies, { ...res.data, id: res.data.movieId }];
         setSavedMovies(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
   }
 
   const handleDeleteMovie = (movie) => {
-    const id = movie.movieId || movie.id;
+    const id = movie._id;
     mainApi
       .deleteSavedMovie(id)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter(m => m.movieId !== id);
+        const updatedSavedMovies = savedMovies.filter(movie => movie._id !== id);
         setSavedMovies(updatedSavedMovies);
-        console.log(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
   }
@@ -198,7 +218,7 @@ function App() {
           <Route path="/saved-movies" element={
             <ProtectedRouteElement
               element={SavedMovies}
-              movies={movies}
+              movies={newMovies}
               savedMovies={savedMovies}
               onMovieDelete={handleDeleteMovie}
               loggedIn={loggedIn}
