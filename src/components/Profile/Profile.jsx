@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Header from '../Header/Header';
 import { useFormWithValidation } from "../../utils/validate";
-import { CurrentUserContext } from "../../state/user";
+import { CurrentUserContext } from "../../state/CurrentUserContext";
 
 export function Profile({ loggedIn, onEditProfile, signOut, error }) {
 
@@ -50,7 +50,7 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
       <Header loggedIn={loggedIn} />
       <section className="main">
         <form className="profile" onSubmit={handleSubmit}>
-          <h1 className="profile__title">Привет, {values.name}!</h1>
+          <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
           <label className="profile__input-label">Имя
             <input
               type="text"
