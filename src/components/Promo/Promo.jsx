@@ -1,7 +1,6 @@
 import React from 'react';
 import './Promo.css';
 import promoImg from '../../images/main-picture.png';
-import { HashLink } from 'react-router-hash-link';
 
 function Promo() {
   return (
@@ -13,9 +12,7 @@ function Promo() {
         <p className="promo__description">
           Листайте ниже, чтобы узнать больше про этот проект и его создателя.
         </p>
-        <HashLink className="promo__about-link" to="#project">
-            Узнать больше
-          </HashLink>
+        <a href="#project" className="promo__about-link">Узнать больше</a>
       </div>
       <img
         className="promo__picture"

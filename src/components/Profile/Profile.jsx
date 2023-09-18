@@ -50,8 +50,7 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
       <Header loggedIn={loggedIn} />
       <section className="main">
         <form className="profile" onSubmit={handleSubmit}>
-          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-          
+          <h1 className="profile__title">Привет, {values.name}!</h1>
           <label className="profile__input-label">Имя
             <input
               type="text"
@@ -59,8 +58,8 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
               name="name"
               minLength="2"
               maxLength="40"
-              defaultValuev={currentUser.name}
-              placeholder=""
+              value={values.name}
+              placeholder="Имя"
               onChange={handleChange}
               pattern='^[a-zA-Zа-яА-я\-]*$'
               required
@@ -68,7 +67,6 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
             ></input>
           </label>
           <span className='profile__input-error'>{errors.name}</span>
-          
           <label className="profile__input-label">E-mail
             <input
               type="email"
@@ -76,8 +74,8 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
               name="email"
               minLength="2"
               maxLength="30"
-              defaultValuev={values.email}
-              placeholder=""
+              value={values.email}
+              placeholder="email"
               onChange={handleChange}
               pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
               required
@@ -85,7 +83,6 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
             ></input>
           </label>
           <span className='profile__input-error'>{errors.email}</span>
-          
           <div className="profile__footer">
             {isDisabledInput ? (
               <>

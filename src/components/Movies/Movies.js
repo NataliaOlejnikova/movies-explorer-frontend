@@ -12,8 +12,8 @@ import { shortMoviesDuration } from '../../utils/constants';
 
 function Movies({
     movies,
+    savedMovies,
     loggedIn,
-    savedMovie,
     onMovieSave,
     onMovieDelete,
 }) {
@@ -50,6 +50,22 @@ function Movies({
             setIsLoading(false);
         }, 2000);
     };
+
+    useEffect(() => {
+        const results = movies.map(movie => {
+            const foundIndex = savedMovies.findIndex(savedMovie => savedMovie.movieId === movie.id);
+
+            if (foundIndex >= 0) {
+                return {...movie, _id: savedMovies[foundIndex]._id}
+            }
+
+            return movie
+        }).filter((movie) =>
+          movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        setSearchResults(results);
+        localStorage.setItem("searchResults", JSON.stringify(results));
+    }, [movies])
 
     const handleChecked = () => {
         setIsChecked(!isChecked);
@@ -117,7 +133,7 @@ function Movies({
                 {isLoading ? <Preloader />
                     : isSearchSuccess ? (<div className='movies__content'>
                           
-                        <MoviesCardList movies={displayedMovies} savedMovie={savedMovie} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
+                        <MoviesCardList movies={displayedMovies} savedMovie={savedMovies} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
                         <MoreButton isShown={isMoreBtnShown} loadMore={loadMore} />  
                     </div>
                     ) : <p className='movies__message'>Ничего не найдено</p>
