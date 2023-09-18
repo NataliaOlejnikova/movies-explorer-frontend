@@ -25,11 +25,12 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
   }
 
   useEffect(() => {
-    if ((values.name !== currentUser.name || values.email !== currentUser.email) && isValid)
+    if (currentUser.name !== values.name || currentUser.email !== values.email) 
       setIsModifiedData(true);
     else
       setIsModifiedData(false);
-  }, [values]);
+  }, [currentUser.name, currentUser.email, values.name, values.email]);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +59,7 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
               name="name"
               minLength="2"
               maxLength="40"
-              value={values.name  || ''}
+              value={values.name || ''}
               placeholder="Имя"
               onChange={handleChange}
               pattern='^[a-zA-Zа-яА-я\-]*$'
