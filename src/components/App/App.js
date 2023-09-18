@@ -11,7 +11,7 @@ import Page404 from '../NotFoundPage/NotFoundPage';
 import * as auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
-import { CurrentUserContext } from "../../state/user";
+import { CurrentUserContext } from "../../state/CurrentUserContext";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
