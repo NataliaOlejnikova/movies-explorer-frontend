@@ -18,13 +18,13 @@ export function Login({ handleLogin, error, setError }) {
 
   return (
     <section className="login">
-      <div className="login__header" onSubmit={handleSubmit}>
-      <a href="/">
+      <div className="login__header">
+        <a href="/">
           <img src={logo} alt="Логотип" className="login__logo" />
         </a>
         <h1 className="login__title">Рады видеть!</h1>
-        </div>
-        <form className="login__form form">
+      </div>
+      <form className="login__form form" onSubmit={handleSubmit}>
         <label className="login__label">E-mail</label>
         <input
           type="email"
@@ -57,9 +57,10 @@ export function Login({ handleLogin, error, setError }) {
           disabled={!isValid}>
           Войти
         </button>
-        </form>
-        <p className="login__link-text">Ещё не зарегистрированы? <Link className="login__link" to="/signup">Регистрация</Link></p>
-      
+      </form>
+      <p className="login__link-text">Ещё не зарегистрированы?
+        <Link className="login__link" to="/signup">Регистрация</Link>
+      </p>
     </section>
   );
 }
