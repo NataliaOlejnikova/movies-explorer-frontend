@@ -29,7 +29,7 @@ export function Register({ handleRegister, error, setError }) {
           maxLength="40"
           placeholder='Имя'
           pattern='^[a-zA-Zа-яА-я\-]*$'
-          value={values.name || ''}
+          defaultValuev={values.name || ''}
             error={errors.name}
           onChange={handleChange}
           required
@@ -44,7 +44,7 @@ export function Register({ handleRegister, error, setError }) {
           maxLength="30"
           placeholder='email'
           pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
-          value={values.email || ''}
+          defaultValuev={values.email || ''}
             error={errors.email}
           onChange={handleChange}
           required
