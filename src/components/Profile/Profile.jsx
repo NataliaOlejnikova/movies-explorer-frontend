@@ -58,7 +58,7 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
               name="name"
               minLength="2"
               maxLength="40"
-              value={values.name}
+              value={values.name  || ''}
               placeholder="Имя"
               onChange={handleChange}
               pattern='^[a-zA-Zа-яА-я\-]*$'
@@ -74,7 +74,7 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
               name="email"
               minLength="2"
               maxLength="30"
-              value={values.email}
+              value={values.email  || ''}
               placeholder="email"
               onChange={handleChange}
               pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
