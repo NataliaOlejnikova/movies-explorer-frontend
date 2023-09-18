@@ -33,6 +33,7 @@ export function Register({ handleRegister, error, setError }) {
           onChange={handleChange}
           required
         ></input>
+        
         <span className='form-welcome__input-error'>{errors.name}</span>
         <label className="form-welcome__input-label">E-mail</label>
         <input

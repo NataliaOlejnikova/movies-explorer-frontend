@@ -51,7 +51,7 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
       <Header loggedIn={loggedIn} />
       <section className="main">
         <form className="profile" onSubmit={handleSubmit}>
-          <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+          <h1 className="profile__title">{`Привет, {currentUser?.name}`}</h1>
           <label className="profile__input-label">Имя
             <input
               type="text"
