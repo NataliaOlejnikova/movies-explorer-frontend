@@ -1,16 +1,46 @@
 import './Register.css';
 import { Link } from "react-router-dom";
 import { useFormWithValidation } from '../../utils/validate';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function Register({ handleRegister, error, setError }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
+  const nameRef = useRef(null)
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+
+  function handleChangeInputValues(event) {
+    let eventFromRef;
+
+    switch (event.target.name) {
+      case ('name'):
+        eventFromRef = nameRef.current
+        break
+      case ('email'):
+        eventFromRef = emailRef.current
+        break
+      case ('password'):
+        eventFromRef = passwordRef.current
+        break
+    }
+
+    handleChange(eventFromRef)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(values.name, values.email, values.password);
-    resetForm();
+    try {
+      handleRegister(values.name, values.email, values.password);
+      resetForm({
+        name: '',
+        email: '',
+        password: '',
+      });
+    } catch (e) {
+      console.error(e)
+    }
   };
 
   useEffect(() => setError(""), []);
@@ -22,6 +52,7 @@ export function Register({ handleRegister, error, setError }) {
         <h1 className="form-welcome__title">Добро пожаловать!</h1>
         <label className="form-welcome__input-label">Имя</label>
         <input
+          ref={nameRef}
           type="text"
           className="form-welcome__input form-welcome__input_type_name"
           name="name"
@@ -30,27 +61,28 @@ export function Register({ handleRegister, error, setError }) {
           placeholder='Имя'
           pattern='^[a-zA-Zа-яА-я\-]*$'
           value={values.name}
-          onChange={handleChange}
+          onChange={handleChangeInputValues}
           required
-        ></input>
-        
+        />
         <span className='form-welcome__input-error'>{errors.name}</span>
         <label className="form-welcome__input-label">E-mail</label>
         <input
+          ref={emailRef}
           type="email"
           className="form-welcome__input form-welcome__input_type_email"
           name="email"
           minLength="2"
           maxLength="30"
-          placeholder='email'
+          placeholder="Email"
           pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
           value={values.email}
-          onChange={handleChange}
+          onChange={handleChangeInputValues}
           required
-        ></input>
+        />
         <span className='form-welcome__input-error'>{errors.email}</span>
         <label className="form-welcome__input-label">Пароль</label>
         <input
+          ref={passwordRef}
           type="password"
           className="form-welcome__input form-welcome__input_type_password"
           name="password"
@@ -58,9 +90,9 @@ export function Register({ handleRegister, error, setError }) {
           maxLength="30"
           placeholder="Пароль"
           value={values.password}
-          onChange={handleChange}
+          onChange={handleChangeInputValues}
           required
-        ></input>
+        />
         <span className='form-welcome__input-error form-welcome__input-error_type_password'>{errors.password}</span>
         <p className="form-welcome__err-text">{error}</p>
         <button

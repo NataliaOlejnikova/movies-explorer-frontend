@@ -213,7 +213,7 @@ function App() {
           <Route path="/movies" element={
             <ProtectedRouteElement
               element={Movies}
-              movies={newMovies}
+              movies={movies}
               loggedIn={loggedIn}
               onMovieSave={handleSaveMovie}
               savedMovies={savedMovies}

@@ -1,36 +1,59 @@
 import "./Profile.css";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import Header from '../Header/Header';
 import { useFormWithValidation } from "../../utils/validate";
 import { CurrentUserContext } from "../../state/CurrentUserContext";
 
 export function Profile({ loggedIn, onEditProfile, signOut, error }) {
-
   const currentUser = useContext(CurrentUserContext);
-  const { values, setValues, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation();
-  const [isDisabledInput, setIsDisabledInput] = useState(true);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation(currentUser);
+  const [isDisabledInput, setIsDisabledInput] = useState(false);
+  const [isDisabledEditButton, setIsDisabledEditButton] = useState(true);
   const [isModifiedData, setIsModifiedData] = useState(false);
+  const [isEditProfile, setIsEditProfile] = useState(false);
+
+  const nameRef = useRef(null)
+  const emailRef = useRef(null)
 
   useEffect(() => {
     resetForm({
-      name: currentUser.name,
-      email: currentUser.email
+      name: currentUser.data.name,
+      email: currentUser.data.email
     });
-  }, [currentUser, setValues, resetForm]);
+
+    setIsDisabledEditButton(true)
+    setIsDisabledInput(false);
+  }, [currentUser, resetForm]);
 
   function handleEditButton() {
-    setIsDisabledInput(false);
+    setIsEditProfile(true)
+    setIsDisabledInput(true);
   }
 
   useEffect(() => {
-    if (currentUser.name !== values.name || currentUser.email !== values.email) 
-      setIsModifiedData(true);
-    else
-      setIsModifiedData(false);
+    setIsDisabledEditButton(!isValid)
+  }, [isValid])
+
+  function handleChangeInputValues(event) {
+    let eventFromRef;
+
+    switch (event.target.name) {
+      case ('name'):
+        eventFromRef = nameRef.current
+        break
+      case ('email'):
+        eventFromRef = emailRef.current
+        break
+    }
+
+    handleChange(eventFromRef)
+  }
+
+  useEffect(() => {
+    setIsModifiedData(currentUser.name !== values.name || currentUser.email !== values.email);
   }, [currentUser.name, currentUser.email, values.name, values.email]);
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,9 +63,12 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
         .then((err) => {
           if (!err) {
             setIsDisabledInput(true)
+            setIsEditProfile(false)
           }
         })
-        .finally(() => setIsModifiedData(true));
+        .finally(() => {
+          setIsModifiedData(true)
+        });
     }
   };
 
@@ -51,9 +77,10 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
       <Header loggedIn={loggedIn} />
       <section className="main">
         <form className="profile" onSubmit={handleSubmit}>
-          <h1 className="profile__title">{`Привет, {currentUser?.name}`}</h1>
+          <h1 className="profile__title">Привет, {currentUser.data.name}</h1>
           <label className="profile__input-label">Имя
             <input
+              ref={nameRef}
               type="text"
               className="profile__input"
               name="name"
@@ -61,37 +88,40 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
               maxLength="40"
               value={values.name || ''}
               placeholder="Имя"
-              onChange={handleChange}
+              onChange={handleChangeInputValues}
               pattern='^[a-zA-Zа-яА-я\-]*$'
               required
               disabled={isDisabledInput}
-            ></input>
+            />
           </label>
           <span className='profile__input-error'>{errors.name}</span>
           <label className="profile__input-label">E-mail
             <input
+              ref={emailRef}
               type="email"
               className="profile__input"
               name="email"
               minLength="2"
               maxLength="30"
-              value={values.email  || ''}
-              placeholder="email"
-              onChange={handleChange}
+              value={values.email || ''}
+              placeholder="Email"
+              onChange={handleChangeInputValues}
               pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
               required
               disabled={isDisabledInput}
-            ></input>
+            />
           </label>
           <span className='profile__input-error'>{errors.email}</span>
           <div className="profile__footer">
-            {isDisabledInput ? (
+            {!isEditProfile ? (
               <>
                 <div className="profile__footer-edit">
                   <button
                     type="button"
                     className="profile__edit"
-                    onClick={handleEditButton}>
+                    onClick={handleEditButton}
+                    disabled={isDisabledEditButton}
+                  >
                     Редактировать
                   </button>
                   <Link className="profile__link" onClick={signOut} to="/">Выйти из аккаунта</Link>
@@ -107,7 +137,8 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
                     type="submit"
                     className="profile__save-btn"
                     onSubmit={handleSubmit}
-                    disabled={!isModifiedData}>
+                    disabled={!isModifiedData}
+                  >
                     Сохранить
                   </button>
                 </div>
