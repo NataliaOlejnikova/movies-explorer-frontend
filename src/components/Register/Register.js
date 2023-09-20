@@ -98,7 +98,7 @@ export function Register({ handleRegister, error, setError }) {
         <button
           type="submit"
           className="form-welcome__button"
-          disabled={!isValid}>
+          disabled={handleRegister || !isValid}>
           Зарегистрироваться
         </button>
         <p className="form-welcome__link-text">Уже зарегистрированы? <Link className="form-welcome__link" to="/signin">Войти</Link></p>

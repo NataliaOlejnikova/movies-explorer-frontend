@@ -136,28 +136,28 @@ function App() {
     updateMovies()
   }, [movies, savedMovies])
 
-  const handleSaveMovie = (movie) => {
+   const handleSaveMovie = (movie) => {
     mainApi
       .SaveMovie(movie)
       .then((res) => {
         const updatedSavedMovies = [...savedMovies, { ...res.data, id: res.data.movieId }];
         setSavedMovies(updatedSavedMovies);
+
+        getSavedMovies().then(() => updateMovies());
       })
       .catch((err) => console.log(err));
   }
-
   const handleDeleteMovie = (movie) => {
-    const id = movie.movieId || movie.id;
+    const id = movie._id;
     mainApi
       .deleteSavedMovie(id)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter(m => m.movieId !== id);
+        const updatedSavedMovies = savedMovies.filter(m => movie._id !== id);
         setSavedMovies(updatedSavedMovies);
-        console.log(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
   }
-
+  
   function editProfileData(data) {
     return mainApi
       .editProfile(data)
