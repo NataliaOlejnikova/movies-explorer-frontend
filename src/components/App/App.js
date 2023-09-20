@@ -95,7 +95,16 @@ function App() {
     tokenCheck();
   }, [loggedIn]);
 
-  const getSavedMovies = () => {
+  const getMovies = async () => {
+    moviesApi
+      .getMovies()
+      .then((res) => {
+        setMovies(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const getSavedMovies = async () => {
     mainApi
       .getSavedMovies()
       .then((res) => {
@@ -106,13 +115,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      moviesApi
-        .getMovies()
-        .then((res) => {
-          setMovies(res);
-        })
-        .catch((err) => console.log(err));
-      getSavedMovies();
+      getMovies().then(() => getSavedMovies());
     }
   }, [loggedIn]);
 
@@ -134,9 +137,9 @@ function App() {
 
   useEffect(() => {
     updateMovies()
-  }, [movies, savedMovies])
+  }, [movies, setMovies])
 
-   const handleSaveMovie = (movie) => {
+  const handleSaveMovie = (movie) => {
     mainApi
       .SaveMovie(movie)
       .then((res) => {
@@ -147,17 +150,18 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
+
   const handleDeleteMovie = (movie) => {
     const id = movie._id;
     mainApi
       .deleteSavedMovie(id)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter(m => movie._id !== id);
+        const updatedSavedMovies = savedMovies.filter(movie => movie._id !== id);
         setSavedMovies(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
   }
-  
+
   function editProfileData(data) {
     return mainApi
       .editProfile(data)
@@ -209,10 +213,10 @@ function App() {
           <Route path="/movies" element={
             <ProtectedRouteElement
               element={Movies}
-              movies={movies}
+              movies={newMovies}
               loggedIn={loggedIn}
               onMovieSave={handleSaveMovie}
-              savedMovie={savedMovies}
+              savedMovies={savedMovies}
               onMovieDelete={handleDeleteMovie}
             />
           } />

@@ -9,10 +9,11 @@ import Preloader from '../Preloader/Preloader';
 import { shortMoviesDuration } from '../../utils/constants';
 
 
+
 function Movies({
     movies,
+    savedMovies,
     loggedIn,
-    savedMovie,
     onMovieSave,
     onMovieDelete,
 }) {
@@ -29,8 +30,7 @@ function Movies({
     const [isNumberOfMoviesShown, setIsNumberOfMoviesShown] = useState(12);
     const [isNumberToAddMovies, setIsNumberToAddMovies] = useState(3);
     const [isMoreBtnShown, setIsMoreBtnShown] = useState(true);
-
-    //поиск фильмов
+    
     const handleSearchQueryChange = (event) => {
         const query = event.target.value;
         setSearchQuery(query);
@@ -51,13 +51,27 @@ function Movies({
         }, 2000);
     };
 
-    //переключение фильтрации для movies
+    useEffect(() => {
+        const results = movies.map(movie => {
+            const foundIndex = savedMovies.findIndex(savedMovie => savedMovie.movieId === movie.id);
+
+            if (foundIndex >= 0) {
+                return {...movie, _id: savedMovies[foundIndex]._id}
+            }
+
+            return movie
+        }).filter((movie) =>
+          movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        setSearchResults(results);
+        localStorage.setItem("searchResults", JSON.stringify(results));
+    }, [movies])
+
     const handleChecked = () => {
         setIsChecked(!isChecked);
         localStorage.setItem("checkboxState", JSON.stringify(!isChecked));
     }
 
-    //настройка фильтра отображения короткометражек для movies
     useEffect(() => {
         if (isChecked) {
             setSearchResultsFiltered(searchResults.filter((movie) => movie.duration <= shortMoviesDuration));
@@ -66,7 +80,6 @@ function Movies({
         }
     }, [searchResults, isChecked]);
 
-    //установка кол-ва отображаемых карточек на странице
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 805) {
@@ -92,7 +105,6 @@ function Movies({
         };
     }, []);
 
-    //кнопка "показать ещё"
     const handleChangeMoreBtn = () => {
         if (searchResults.length > isNumberOfMoviesShown) {
             setIsMoreBtnShown(true);
@@ -107,7 +119,6 @@ function Movies({
 
     const displayedMovies = searchResultsFiltered.slice(0, isNumberOfMoviesShown);
 
-    //настройка скрытия кнопки "Ещё"
     useEffect(() => {
         handleChangeMoreBtn();
     }, [loadMore, handleSearch]);
@@ -116,15 +127,18 @@ function Movies({
         <>
             <Header loggedIn={loggedIn} />
             <main className='movies'>
+               
                 <SearchForm onChange={handleSearchQueryChange} searchQuery={searchQuery} handleSearch={handleSearch}
                     isChecked={isChecked} onCheckboxUpdated={handleChecked} />
                 {isLoading ? <Preloader />
-                    : isSearchSuccess ? (<div className='movies__main-content'>
-                        <MoviesCardList movies={displayedMovies} savedMovie={savedMovie} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
-                        <MoreButton isShown={isMoreBtnShown} loadMore={loadMore} />
+                    : isSearchSuccess ? (<div className='movies__content'>
+                          
+                        <MoviesCardList movies={displayedMovies} savedMovie={savedMovies} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
+                        <MoreButton isShown={isMoreBtnShown} loadMore={loadMore} />  
                     </div>
-                    ) : <p className='movies__not-found'>Ничего не найдено</p>
+                    ) : <p className='movies__message'>Ничего не найдено</p>
                 }
+            
             </main>
             <Footer />
         </>
