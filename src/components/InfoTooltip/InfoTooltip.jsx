@@ -9,7 +9,7 @@ const InfoTooltip = ({ isOpen, onClose, message }) => {
           className="popup__close"
           onClick={onClose}
         ></button>
-        <p>{JSON.stringify(message)}</p>
+        <p>Профиль успешно обновлен</p>
       </div>
     </div>
   );
