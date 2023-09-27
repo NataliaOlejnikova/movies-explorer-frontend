@@ -29,7 +29,7 @@ class MainApi {
       }),
     }).then(this._getResult);
   }
-  getSavedMovies() {
+ getSavedMovies() {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
       method: "GET",

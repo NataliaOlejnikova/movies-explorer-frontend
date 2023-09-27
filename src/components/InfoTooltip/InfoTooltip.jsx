@@ -1,18 +1,26 @@
-import "./InfoTooltip.css";
+import success from '../../images/success-reg.svg'
+import fail from '../../images/err-reg.svg'
+import './InfoTooltip.css';
 
-const InfoTooltip = ({ isOpen, onClose, message }) => {
+function InfoTooltip(props) {
+
   return (
-    <div className={`popup ${isOpen && "popup__opened"}`}>
+    <section
+      className={
+        "popup popup_type_info" + (props.isOpen ? " popup_opened" : "")
+      }
+    >
       <div className="popup__container">
         <button
           type="button"
-          className="popup__close"
-          onClick={onClose}
+          className="popup__close-button"
+          onClick={props.onClose}
         ></button>
-        <p>Профиль успешно обновлен</p>
+        <img src={props.status ? success : fail} alt={props.status ? "Данные изменены" : "Что-то пошло не так"} className="popup__icon-reg" />
+        <h2 className="popup__text-reg">{props.status ? "Данные успешно отредактированы!" : "Что-то пошло не так! Попробуйте ещё раз."}</h2>
       </div>
-    </div>
+    </section>
   );
-};
+}
 
 export default InfoTooltip;
