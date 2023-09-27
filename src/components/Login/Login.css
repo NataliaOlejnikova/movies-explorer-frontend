@@ -70,6 +70,9 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
 }
 
 .login__link {
@@ -181,7 +184,8 @@
     margin-bottom: 5px;
     font-size: 12px;
   }
-  .login__link-text{
-  font-size: 12px;
+
+  .login__link-text {
+    font-size: 12px;
   }
 }

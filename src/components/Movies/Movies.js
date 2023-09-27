@@ -22,8 +22,8 @@ function Movies({
     const [searchResults, setSearchResults] = useState(JSON.parse(localStorage.getItem("searchResults")) || []); //результаты поиска
     const [searchResultsFiltered, setSearchResultsFiltered] = useState([]); // рез-ты поиска с учетом фильтрации по короткометражкам
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [isSearchSuccess, setIsSearchSuccess] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSearchSuccess, setIsSearchSuccess] = useState(false);
 
     const [isChecked, setIsChecked] = useState(() => JSON.parse(localStorage.getItem("checkboxState")) || false);
 
@@ -49,7 +49,7 @@ function Movies({
             setIsSearchSuccess(results.length > 0);
             setIsLoading(false);
         }, 2000);
-    };
+    }
 
     useEffect(() => {
         const results = movies.map(movie => {
@@ -64,7 +64,10 @@ function Movies({
           movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
         )
         setSearchResults(results);
+        setIsSearchSuccess(results.length > 0);
         localStorage.setItem("searchResults", JSON.stringify(results));
+        setIsLoading(false)
+        setIsSearchSuccess(true)
     }, [movies])
 
     const handleChecked = () => {
@@ -126,19 +129,22 @@ function Movies({
     return (
         <>
             <Header loggedIn={loggedIn} />
-            <main className='movies'>
-               
-                <SearchForm onChange={handleSearchQueryChange} searchQuery={searchQuery} handleSearch={handleSearch}
-                    isChecked={isChecked} onCheckboxUpdated={handleChecked} />
+            <main className="movies">
+                <SearchForm
+                  onChange={handleSearchQueryChange}
+                  searchQuery={searchQuery}
+                  handleSearch={handleSearch}
+                  isChecked={isChecked}
+                  onCheckboxUpdated={handleChecked}
+                />
+
                 {isLoading ? <Preloader />
-                    : isSearchSuccess ? (<div className='movies__content'>
-                          
-                        <MoviesCardList movies={displayedMovies} savedMovie={savedMovies} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
+                    : isSearchSuccess ? (<div className="movies__content">
+                        <MoviesCardList movies={displayedMovies} savedMovies={savedMovies} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
                         <MoreButton isShown={isMoreBtnShown} loadMore={loadMore} />  
                     </div>
-                    ) : <p className='movies__message'>Ничего не найдено</p>
+                    ) : <p className="movies__message">Ничего не найдено</p>
                 }
-            
             </main>
             <Footer />
         </>

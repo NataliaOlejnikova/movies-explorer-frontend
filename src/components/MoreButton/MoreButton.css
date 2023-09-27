@@ -3,11 +3,9 @@
   width: 100%;
   min-height: 140px;
   padding: 50px 70px 80px;
-
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  
 }
 
 .cards__button {
@@ -34,6 +32,12 @@
 
 @media screen and (max-width: 1279px) {
   .more {
-      padding-top: 50px;
+    padding-top: 50px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .more {
+    padding: 50px 70px 80px;
   }
 }

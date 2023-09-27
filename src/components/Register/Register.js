@@ -11,6 +11,10 @@ export function Register({ handleRegister, error, setError }) {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
 
+  if (window.history.length <= 2) {
+    window.location.href = '/'
+  }
+
   function handleChangeInputValues(event) {
     let eventFromRef;
 

@@ -45,6 +45,9 @@
   padding: 0;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .search__btn:hover {
@@ -79,10 +82,16 @@
   .search__icon {
     padding-left: 8px;
   }
+
   .search__span-container {
-    margin-bottom:0;
+    margin-bottom: 0;
   }
-  
+}
+
+@media screen and (min-width: 450px) and (max-width: 525px) {
+  .search__btn {
+    width: 42px;
+  }
 }
 
 @media screen and (max-width: 450px) {

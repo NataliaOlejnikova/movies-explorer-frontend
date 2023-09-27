@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import './MoviesCard.css';
 import { movieURL } from '../../utils/constants';
 
-function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
+function MoviesCard({ movie, savedMovies, onMovieSave, onMovieDelete }) {
     const location = useLocation();
     const movieDuration = (min) => {
         const m = min % 60;
@@ -12,7 +11,7 @@ function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
         return duration.trim();
     };
 
-    const isSaved = savedMovie.some(m => m.movieId === movie.id);
+    const isSaved = savedMovies.some(m => m.movieId === movie.id);
 
     function activeMovieSave() {
         if (!isSaved) {

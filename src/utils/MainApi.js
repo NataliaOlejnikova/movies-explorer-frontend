@@ -29,6 +29,16 @@ class MainApi {
       }),
     }).then(this._getResult);
   }
+  getSavedMovies() {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then(this._getResult);
+  }
 
   SaveMovie(data) {
     const token = localStorage.getItem('token');
@@ -42,16 +52,7 @@ class MainApi {
     }).then(this._getResult);
   }
 
-  getSavedMovies() {
-    const token = localStorage.getItem('token');
-    return fetch(`${this._url}/movies`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-    }).then(this._getResult);
-  }
+  
 
   deleteSavedMovie(movieId) {
     const token = localStorage.getItem('token');

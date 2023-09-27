@@ -14,6 +14,11 @@ import moviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../state/CurrentUserContext";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import {
+  apiErrorCodes, editProfileAPIErrorsByCode,
+  loginAPIErrorsByCode,
+  registerAPIErrorsByCode
+} from "../../utils/constants";
 
 function App() {
   const navigate = useNavigate();
@@ -42,15 +47,13 @@ function App() {
         navigate("/movies");
       })
       .catch((err) => {
-        console.log(err);
-        if (err === 'Ошибка: 401') {
-          setError('Неправильный логин или пароль');
+        if (err === apiErrorCodes["401"]) {
+          setError(loginAPIErrorsByCode["401"]);
         }
-        if (err === 'Ошибка: 500') {
-          setError('На сервере произошла ошибка');
-        }
-        else {
-          setError('При авторизации пользователя произошла ошибка');
+        if (err === apiErrorCodes["500"]) {
+          setError(loginAPIErrorsByCode["500"]);
+        } else {
+          setError(loginAPIErrorsByCode.ANY);
         }
       });
   };
@@ -62,13 +65,12 @@ function App() {
         handleLogin(email, password);
       })
       .catch((err) => {
-        console.log(err);
-        if (err === 'Ошибка: 409') {
-          setError('Пользователь с таким email уже существует');
-        } else if (err === 'Ошибка: 500') {
-          setError('На сервере произошла ошибка');
+        if (err === apiErrorCodes["409"]) {
+          setError(registerAPIErrorsByCode["409"]);
+        } else if (err === apiErrorCodes["500"]) {
+          setError(registerAPIErrorsByCode["500"]);
         } else {
-          setError('При регистрации пользователя произошла ошибка');
+          setError(registerAPIErrorsByCode.ANY);
         }
       })
   };
@@ -170,11 +172,11 @@ function App() {
         setStatusInfoTooltip(true);
       })
       .catch((err) => {
-        console.log(err);
         if (err) {
-          setError("При обновлении профиля произошла ошибка.");
+          setError(editProfileAPIErrorsByCode.ANY);
         }
         setStatusInfoTooltip(false);
+
         return err;
       })
       .finally(() => {
@@ -188,7 +190,7 @@ function App() {
     localStorage.removeItem("searchQuery");
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setCurrentUser({});
+    setCurrentUser(() => {});
     navigate("/");
   }
 
@@ -197,7 +199,7 @@ function App() {
   }
 
   return (
-    <div className='page'>
+    <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route path="/" element={<Main loggedIn={loggedIn} />} />

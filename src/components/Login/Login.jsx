@@ -11,6 +11,10 @@ export function Login({ handleLogin, error, setError }) {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
 
+  if (window.history.length <= 2) {
+    window.location.href = '/'
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     try {

@@ -33,7 +33,7 @@ function SavedMovies({
     setSearchResultsInSaved(results);
     setIsSearchDoneInSaved(true);
     setIsSearchSuccess(results.length > 0);
-  };
+  }
 
   const handleCheckedInSaved = () => {
     setIsCheckedInSaved(!isCheckedInSaved);
@@ -61,11 +61,10 @@ function SavedMovies({
       <main className='movies'>
         <SearchForm onChange={handleSearchQueryChangeInSaved} searchQuery={searchQueryInSaved} handleSearch={handleSearchInSaved}
           isChecked={isCheckedInSaved} onCheckboxUpdated={handleCheckedInSaved} />
-        {isSearchSuccess ?
-          <MoviesCardList movies={searchResultsFilteredInSaved} savedMovie={savedMovies} onMovieDelete={onMovieDelete} />
+        {isSearchSuccess && searchResultsFilteredInSaved.length ?
+          <MoviesCardList movies={searchResultsFilteredInSaved} savedMovies={savedMovies} onMovieDelete={onMovieDelete} />
           : <p className='movies__not-found'>Ничего не найдено</p>
         }
-
       </main>
       <Footer />
     </>

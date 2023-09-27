@@ -21,6 +21,33 @@ export const registerErrors = {
     },
 };
 
+export const apiErrorCodes = {
+    401: 'Ошибка: 401',
+    409: 'Ошибка: 409',
+    500: 'Ошибка: 500'
+}
+
+export const loginAPIErrorsByCode = {
+    401: 'Неправильный логин или пароль',
+    500: 'На сервере произошла ошибка',
+    ANY: 'При авторизации пользователя произошла ошибка'
+}
+
+export const registerAPIErrorsByCode = {
+    409: 'Пользователь с таким email уже существует',
+    500: 'На сервере произошла ошибка',
+    ANY: 'При авторизации пользователя произошла ошибка'
+}
+
+export const editProfileAPIErrorsByCode = {
+    ANY: 'При обновлении профиля произошла ошибка.'
+}
+
+export const windowBreakpoints = {
+    md: 805,
+    sm: 450
+}
+
 export const validName = /^[а-я А-ЯёЁa-zA-Z0-9'-]+$/;
 export const validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i 
 
