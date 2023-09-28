@@ -139,7 +139,7 @@ function Movies({
                 />
 
                 {isLoading ? <Preloader />
-                    : isSearchSuccess ? (<div className="movies__content">
+                    : isSearchSuccess && searchResultsFiltered.length ? (<div className="movies__content">
                         <MoviesCardList movies={displayedMovies} savedMovies={savedMovies} onMovieSave={onMovieSave} onMovieDelete={onMovieDelete} />
                         <MoreButton isShown={isMoreBtnShown} loadMore={loadMore} />  
                     </div>
