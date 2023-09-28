@@ -13,6 +13,7 @@ import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../state/CurrentUserContext";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+import RequireAuthUser from '../../utils/RequireAuthUser';
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import {
   apiErrorCodes, editProfileAPIErrorsByCode,
@@ -205,11 +206,15 @@ function App() {
           <Route path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
             path="/signup"
-            element={<Register handleRegister={handleRegister} error={error} setError={setError} />}
+            element={ <RequireAuthUser loggedIn={loggedIn}>
+            <Register handleRegister={handleRegister} error={error} setError={setError} />
+            </RequireAuthUser>}
           />
           <Route
             path="/signin"
-            element={<Login handleLogin={handleLogin} error={error} setError={setError} />}
+            element={ <RequireAuthUser loggedIn={loggedIn}>
+            <Login handleLogin={handleLogin} error={error} setError={setError} />
+            </RequireAuthUser>}
           />
           <Route path="*" element={<Page404 />} />
           <Route path="/movies" element={

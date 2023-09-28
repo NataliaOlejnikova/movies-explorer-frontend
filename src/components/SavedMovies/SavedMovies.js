@@ -61,7 +61,7 @@ function SavedMovies({
       <main className='movies'>
         <SearchForm onChange={handleSearchQueryChangeInSaved} searchQuery={searchQueryInSaved} handleSearch={handleSearchInSaved}
           isChecked={isCheckedInSaved} onCheckboxUpdated={handleCheckedInSaved} />
-        {isSearchSuccess && searchResultsFilteredInSaved.length ?
+        {isSearchSuccess  && searchResultsFilteredInSaved.length ?
           <MoviesCardList movies={searchResultsFilteredInSaved} savedMovies={savedMovies} onMovieDelete={onMovieDelete} />
           : <p className='movies__not-found'>Ничего не найдено</p>
         }

@@ -32,12 +32,18 @@ class MainApi {
  getSavedMovies() {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
-      method: "GET",
+      /*method: "GET",*/
       headers: {
-        "content-type": "application/json",
+       /* "content-type": "application/json",*/
         authorization: `Bearer ${token}`,
       },
-    }).then(this._getResult);
+    })/*.then(this._getResult);*/
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      });
   }
 
   SaveMovie(data) {
