@@ -1,0 +1,43 @@
+.more {
+  max-width: 1280px;
+  width: 100%;
+  min-height: 140px;
+  padding: 50px 70px 80px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.cards__button {
+  width: 100%;
+  background-color: #F9F9F9;
+  border: none;
+  border-radius: 6px;
+  padding: 11px 0 10px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000000;
+  transition: opacity .8s ease-in-out;
+  cursor: pointer;
+}
+
+.cards__button:hover {
+  opacity: .7;
+}
+
+.cards__button_hidden {
+  display: none;
+}
+
+@media screen and (max-width: 1279px) {
+  .more {
+    padding-top: 50px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .more {
+    padding: 50px 70px 80px;
+  }
+}
