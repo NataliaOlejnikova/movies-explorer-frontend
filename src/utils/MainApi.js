@@ -4,7 +4,7 @@ class MainApi {
     this._headers = headers;
   }
 
-  _getResult(res, isHtml = false) {
+ /* _getResult(res, isHtml = false) {
     if (isHtml) {
       return res
     }
@@ -13,7 +13,14 @@ class MainApi {
     }
 
     return Promise.reject(`Ошибка: ${res.status}`);
+  }*/
+  _getResult(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
+
 
   editProfile(data) {
     const token = localStorage.getItem('token');
@@ -29,12 +36,25 @@ class MainApi {
       }),
     }).then(this._getResult);
   }
+  SaveMovie(data) {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data)
+      
+    }).then(this._getResult);
+  }
+
  getSavedMovies() {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
-      /*method: "GET",*/
+      method: "GET",
       headers: {
-       /* "content-type": "application/json",*/
+        "content-type": "application/json",
         authorization: `Bearer ${token}`,
       },
     })/*.then(this._getResult);*/
@@ -46,17 +66,7 @@ class MainApi {
       });
   }
 
-  SaveMovie(data) {
-    const token = localStorage.getItem('token');
-    return fetch(`${this._url}/movies`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data)
-    }).then(this._getResult);
-  }
+  
 
   
 

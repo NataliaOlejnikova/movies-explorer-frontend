@@ -149,11 +149,11 @@ function App() {
         const updatedSavedMovies = [...savedMovies, { ...res.data, id: res.data.movieId }];
         setSavedMovies(updatedSavedMovies);
 
-        getSavedMovies().then(() => updateMovies());
+       getSavedMovies().then(() => updateMovies());
       })
       .catch((err) => console.log(err));
-  }
-
+  
+    }
   const handleDeleteMovie = (movie) => {
     const id = movie._id;
     mainApi
@@ -164,7 +164,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
+  
   function editProfileData(data) {
     return mainApi
       .editProfile(data)
